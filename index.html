@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shamsiddin | Software Developer & 30 Interactive Apps</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- QRCode JS kutubxonasi (QR Kod ilovasi uchun) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        darkBg: '#090d16',
+                        cardBg: '#111827',
+                        accentCyan: '#06b6d4',
+                        accentPurple: '#8b5cf6',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Maxsus scrollbar va effektlar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090d16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+        .glass-nav {
+            background: rgba(9, 13, 22, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #22d3ee 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glow-card:hover {
+            box-shadow: 0 0 30px -5px rgba(6, 182, 212, 0.25);
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        /* Modal animatsiyasi */
+        @keyframes modalPop {
+            0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-animate {
+            animation: modalPop 0.25s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-slate-200 font-sans antialiased selection:bg-cyan-500 selection:text-slate-950 overflow-x-hidden">
+
+    <!-- Fon dekorativ nurlari -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div class="absolute top-1/3 -right-40 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div class="absolute inset-0 bg-grid"></div>
+    </div>
+
+    <!-- Navigatsiya paneli (Navbar) -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-nav border-b border-slate-800/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-2.5 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center text-white font-mono font-bold text-lg shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+                        &lt;/&gt;
+                    </div>
+                    <span class="font-mono font-bold text-xl tracking-tight text-white">
+                        Shamsiddin<span class="text-cyan-400">.dev</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Menyu -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors">Bosh sahifa</a>
+                    <a href="#about" class="nav-link text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors">Men haqimda</a>
+                    <a href="#skills" class="nav-link text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors">Ko'nikmalar</a>
+                    <a href="#projects" class="nav-link text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors flex items-center gap-1.5">
+                        <span>Ilovalar</span>
+                        <span class="px-2 py-0.5 text-[11px] font-mono rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">30</span>
+                    </a>
+                    <a href="#contact" class="px-4 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 text-sm font-semibold hover:bg-cyan-500 hover:text-slate-950 transition-all">
+                        Bog'lanish
+                    </a>
+                </nav>
+
+                <!-- Mobil menyu tugmasi -->
+                <button id="mobile-menu-btn" aria-label="Menyuni ochish" class="md:hidden p-2.5 rounded-xl bg-slate-800/70 text-slate-300 hover:text-white border border-slate-700">
+                    <i class="fa-solid fa-bars text-lg" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobil Menyu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 border-b border-slate-800 px-4 pt-3 pb-6 space-y-2">
+            <a href="#home" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400">Bosh sahifa</a>
+            <a href="#about" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400">Men haqimda</a>
+            <a href="#skills" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400">Ko'nikmalar</a>
+            <a href="#projects" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400">30 ta Ishlaydigan Ilova</a>
+            <a href="#contact" class="mobile-link block px-4 py-3 rounded-xl text-base font-semibold bg-gradient-to-r from-cyan-500 to-purple-600 text-white text-center mt-2">Bog'lanish</a>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+        <!-- HERO BO'LIMI -->
+        <section id="home" class="min-h-screen flex items-center pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Chap ustun: Matn va CTA -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/80 text-cyan-400 font-mono text-xs sm:text-sm">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span>Yangi loyihalar uchun ochiqman</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                        Salom, men <span class="gradient-text">Shamsiddin</span>
+                    </h1>
+
+                    <div class="font-mono text-lg sm:text-2xl text-slate-300 flex items-center justify-center lg:justify-start gap-2 h-8">
+                        <span class="text-purple-400">&gt;</span>
+                        <span id="typewriter-text" class="text-cyan-300 font-medium"></span>
+                        <span class="w-2.5 h-6 bg-cyan-400 animate-pulse inline-block"></span>
+                    </div>
+
+                    <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Zamonaviy veb-ilovalar, interaktiv tizimlar va xavfsiz dasturiy yechimlar yaratuvchi dasturchiman. Toza kod, tezkor interfeys va foydalanuvchi qulayligi — mening asosiy maqsadim.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#projects" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold shadow-lg shadow-cyan-500/25 hover:opacity-95 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                            <span>30 ta Ilovani sinash</span>
+                            <i class="fa-solid fa-rocket"></i>
+                        </a>
+                        <a href="tel:+998771957888" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-800 text-slate-200 font-semibold border border-slate-700 hover:border-emerald-500/50 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-phone text-emerald-400"></i>
+                            <span>+998 77 195 78 88</span>
+                        </a>
+                        <a href="sms:+998771957888" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-800 text-slate-200 font-semibold border border-slate-700 hover:border-cyan-500/50 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-comment-sms text-cyan-400"></i>
+                            <span>Xabar yozish</span>
+                        </a>
+                    </div>
+
+                    <!-- Tezkor statistika -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80 max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-bold text-white font-mono">30+</div>
+                            <div class="text-xs sm:text-sm text-slate-400">Interaktiv ilova</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-bold text-cyan-400 font-mono">100%</div>
+                            <div class="text-xs sm:text-sm text-slate-400">Ishlaydigan tizim</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-bold text-purple-400 font-mono">24/7</div>
+                            <div class="text-xs sm:text-sm text-slate-400">Kodlash ishtiyoqi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- O'ng ustun: Terminal / Kod kartasi -->
+                <div class="lg:col-span-5 animate-float">
+                    <div class="rounded-2xl bg-slate-900/95 border border-slate-800 shadow-2xl overflow-hidden backdrop-blur-sm">
+                        <!-- Terminal sarlavhasi -->
+                        <div class="flex items-center justify-between px-4 py-3 bg-slate-950/90 border-b border-slate-800">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                            </div>
+                            <span class="font-mono text-xs text-slate-400">shamsiddin@dev: ~/portfolio</span>
+                            <button onclick="copyProfileCode()" title="Kodni nusxalash" class="text-slate-400 hover:text-cyan-400 transition-colors text-xs font-mono flex items-center gap-1">
+                                <i class="fa-regular fa-copy"></i>
+                                <span id="copy-label">Copy</span>
+                            </button>
+                        </div>
+                        <!-- Kod matni -->
+                        <div class="p-5 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto" id="developer-code-block">
+<pre class="text-slate-300"><code><span class="text-purple-400">const</span> <span class="text-cyan-400">developer</span> = {
+  <span class="text-slate-400">name:</span> <span class="text-emerald-400">"Shamsiddin (Shamsi)"</span>,
+  <span class="text-slate-400">role:</span> <span class="text-emerald-400">"Software Developer"</span>,
+  <span class="text-slate-400">location:</span> <span class="text-emerald-400">"Samarkand, Uzbekistan 🇺🇿"</span>,
+  <span class="text-slate-400">phone:</span> <span class="text-amber-300">"+998 77 195 78 88"</span>,
+  <span class="text-slate-400">appsCount:</span> <span class="text-cyan-400">30</span>,
+  <span class="text-slate-400">stack:</span> [
+    <span class="text-amber-300">"HTML5"</span>, <span class="text-amber-300">"CSS3"</span>, <span class="text-amber-300">"JavaScript"</span>,
+    <span class="text-amber-300">"Python"</span>, <span class="text-amber-300">"Android"</span>, <span class="text-amber-300">"CyberSec"</span>
+  ],
+  <span class="text-cyan-300">launchApps</span>: () <span class="text-purple-400">=&gt;</span> {
+    <span class="text-purple-400">return</span> <span class="text-emerald-400">"30 ta tayyor ilova ishga tushirildi!"</span>;
+  }
+};</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEN HAQIMDA (ABOUT) -->
+        <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800/60">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <span class="font-mono text-cyan-400 text-sm uppercase tracking-wider">// Men haqimda</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Texnologiya va ijodkorlik uyg'unligi</h2>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-6 space-y-5 text-slate-300 leading-relaxed text-base sm:text-lg">
+                        <p>
+                            Men <strong class="text-white">Shamsiddin</strong> — dasturiy ta'minot ishlab chiqish, veb-texnologiyalar va axborot xavfsizligi sohalariga chuqur qiziqadigan dasturchiman. Har bir loyihaga nafaqat texnik vazifa, balki foydalanuvchiga zavq beradigan raqamli mahsulot sifatida yondashaman.
+                        </p>
+                        <p>
+                            Mening asosiy yo'nalishlarim — tezkor veb-interfeyslar qurish, Python yordamida avtomatlashtirish va backend mantiqini yozish, shuningdek tizimlarning kiberxavfsizligini tahlil qilishdan iborat. Pastdagi <strong class="text-cyan-400">30 ta jonli mini-ilova</strong> orqali ishlarimni bevosita sinab ko'rishingiz mumkin!
+                        </p>
+                        <div class="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl bg-cardBg border border-slate-800 flex items-start gap-3">
+                                <div class="p-2.5 rounded-lg bg-cyan-500/10 text-cyan-400">
+                                    <i class="fa-solid fa-code"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white text-sm">Toza va masshtabli kod</h4>
+                                    <p class="text-xs text-slate-400 mt-1">Zamonaviy standartlarga mos arxitektura</p>
+                                </div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-cardBg border border-slate-800 flex items-start gap-3">
+                                <div class="p-2.5 rounded-lg bg-purple-500/10 text-purple-400">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white text-sm">Xavfsizlik ustuvorligi</h4>
+                                    <p class="text-xs text-slate-400 mt-1">Ma'lumotlar himoyasi va barqarorlik</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- O'ng taraf: Yo'nalishlar kartalari -->
+                    <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-6 rounded-2xl bg-cardBg/90 border border-slate-800 glow-card transition-all">
+                            <i class="fa-solid fa-globe text-3xl text-cyan-400 mb-4"></i>
+                            <h3 class="text-lg font-bold text-white mb-2">Web Dasturlash</h3>
+                            <p class="text-sm text-slate-400">Barcha qurilmalarga moslashuvchan (responsive), tezkor va zamonaviy veb-saytlar hamda SPA ilovalar.</p>
+                        </div>
+                        <div class="p-6 rounded-2xl bg-cardBg/90 border border-slate-800 glow-card transition-all">
+                            <i class="fa-solid fa-terminal text-3xl text-purple-400 mb-4"></i>
+                            <h3 class="text-lg font-bold text-white mb-2">Backend & Skriptlar</h3>
+                            <p class="text-sm text-slate-400">Python va Linux muhitida server mantiqi, botlar va jarayonlarni avtomatlashtirish vositalari.</p>
+                        </div>
+                        <div class="p-6 rounded-2xl bg-cardBg/90 border border-slate-800 glow-card transition-all">
+                            <i class="fa-solid fa-gamepad text-3xl text-emerald-400 mb-4"></i>
+                            <h3 class="text-lg font-bold text-white mb-2">Interaktiv O'yinlar</h3>
+                            <p class="text-sm text-slate-400">Canvas, JavaScript animatsiyalar va real vaqt rejimida ishlovchi o'yin hamda simulyatorlar.</p>
+                        </div>
+                        <div class="p-6 rounded-2xl bg-cardBg/90 border border-slate-800 glow-card transition-all">
+                            <i class="fa-solid fa-user-secret text-3xl text-amber-400 mb-4"></i>
+                            <h3 class="text-lg font-bold text-white mb-2">Kiberxavfsizlik</h3>
+                            <p class="text-sm text-slate-400">Kriptografiya, xeshlash, zaifliklarni aniqlash va tarmoq xavfsizligi vositalari.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KO'NIKMALAR (SKILLS) -->
+        <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-950/50 border-t border-slate-800/60">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <span class="font-mono text-purple-400 text-sm uppercase tracking-wider">// Texnologik stek</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Ko'nikmalar va Vositalar</h2>
+                    <p class="text-slate-400 mt-3 text-sm sm:text-base">Loyihalarni g'oyadan tayyor mahsulotgacha olib chiqishda foydalanadigan asosiy texnologiyalarim.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Frontend -->
+                    <div class="p-6 rounded-2xl bg-cardBg border border-slate-800 glow-card transition-all">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-11 h-11 rounded-xl bg-cyan-500/15 text-cyan-400 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-laptop-code"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Frontend</h3>
+                                <p class="text-xs text-slate-400">Interfeys va dizayn</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1.5">
+                                    <span class="font-medium text-slate-200"><i class="fa-brands fa-html5 text-orange-500 mr-2"></i>HTML5 & CSS3 / Tailwind</span>
+                                    <span class="font-mono text-cyan-400">95%</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1.5">
+                                    <span class="font-medium text-slate-200"><i class="fa-brands fa-js text-yellow-400 mr-2"></i>JavaScript (ES6+)</span>
+                                    <span class="font-mono text-cyan-400">90%</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1.5">
+                                    <span class="font-medium text-slate-200"><i class="fa-solid fa-pen-nib text-pink-400 mr-2"></i>UI/UX & Responsive</span>
+                                    <span class="font-mono text-cyan-400">88%</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" style="width: 88%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-6 pt-4 border-t border-slate-800">
+                            <span class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-cyan-300">DOM API</span>
+                            <span class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-cyan-300">Canvas 2D</span>
+                            <span class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-cyan-300">Tailwind CSS</span>
+                        </div>
+                    </div>
+
+                    <!-- Backend & Tools -->
+                    <div class="p-6 rounded-2xl bg-cardBg border border-slate-800 glow-card transition-all">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-11 h-11 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-server"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Backend & Vositalar</h3>
+                                <p class="text-xs text-slate-400">Dasturlash va tizimlar</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1.5">
+                                    <span class="font-medium text-slate-200"><i class="fa-brands fa-python text-blue-400 mr-2"></i>Python</span>
+                                    <span class="font-mono text-purple-400">88%</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1.5">
+                                    <span class="font-medium text-slate-200"><i class="fa-brands fa-git-alt text-orange-500 mr-2"></i>Git & GitHub</span>
+                                    <span class="font-mono text-purple-400">92%</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1.5">
+                                    <span class="font-medium text-slate-200"><i class="fa-brands fa-android text-emerald-400 mr-2"></i>Android Studio & Linux</span>
+                                    <span class="font-mono text-purple-400">82%</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full" style="width: 82%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-6 pt-4 border-t border-slate-800">
+                            <span class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-purple-300">REST API</span>
+                            <span class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-purple-300">Bash / CLI</span>
+                            <span class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-purple-300">SQLite</span>
+                        </div>
+                    </div>
+
+                    <!-- Cyber Security -->
+                    <div class="p-6 rounded-2xl bg-cardBg border border-slate-800 glow-card transition-all">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-11 h-11 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-shield-virus"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Cyber Security</h3>
+                                <p class="text-xs text-slate-400">Xavfsizlik asoslari</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1.5">
+                                    <span class="font-medium text-slate-200"><i class="fa-solid fa-network-wired text-emerald-400 mr-2"></i>Tarmoq Xavfsizligi</span>
+                                    <span class="font-mono text-emerald-400">80%</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1.5">
+                                    <span class="font-medium text-slate-200"><i class="fa-solid fa-bug-slash text-rose-400 mr-2"></i>Web Zaifliklar (OWASP)</span>
+                                    <span class="font-mono text-emerald-400">78%</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full" style="width: 78%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1.5">
+                                    <span class="font-medium text-slate-200"><i class="fa-solid fa-key text-amber-400 mr-2"></i>Kriptografiya & Hashing</span>
+                                    <span class="font-mono text-emerald-400">85%</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-6 pt-4 border-t border-slate-800">
+                            <span class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-emerald-300">Kali Linux</span>
+                            <span class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-emerald-300">XSS / CSRF</span>
+                            <span class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-emerald-300">SHA-256</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOYIHALAR VA 30 TA ISHLAYDIGAN ILOVA (PROJECTS) -->
+        <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800/60">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6">
+                    <div>
+                        <span class="font-mono text-cyan-400 text-sm uppercase tracking-wider">// Interaktiv ekotizim</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">30 ta Ishlaydigan Ilova & O'yinlar</h2>
+                        <p class="text-slate-400 mt-2 text-sm sm:text-base">Istalgan ilovani tanlang va "Ishga tushirish" tugmasi orqali shu yerning o'zida foydalaning!</p>
+                    </div>
+
+                    <!-- Qidiruv maydoni -->
+                    <div class="relative w-full lg:w-80">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" id="app-search-input" oninput="renderProjects()" placeholder="Ilova nomini qidiring..." class="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500 transition-colors">
+                    </div>
+                </div>
+
+                <!-- Filtr tugmalari -->
+                <div class="flex flex-wrap gap-2.5 mb-10">
+                    <button onclick="filterProjects('all')" class="filter-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-cyan-500 text-slate-950 transition-all shadow-lg shadow-cyan-500/20" data-filter="all">
+                        Barchasi (30)
+                    </button>
+                    <button onclick="filterProjects('web')" class="filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-slate-800/90 text-slate-300 hover:bg-slate-700 border border-slate-700/70 transition-all" data-filter="web">
+                        <i class="fa-solid fa-globe mr-1.5 text-cyan-400"></i>Web Ilovalar (7)
+                    </button>
+                    <button onclick="filterProjects('game')" class="filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-slate-800/90 text-slate-300 hover:bg-slate-700 border border-slate-700/70 transition-all" data-filter="game">
+                        <i class="fa-solid fa-gamepad mr-1.5 text-purple-400"></i>O'yinlar (9)
+                    </button>
+                    <button onclick="filterProjects('security')" class="filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-slate-800/90 text-slate-300 hover:bg-slate-700 border border-slate-700/70 transition-all" data-filter="security">
+                        <i class="fa-solid fa-shield-halved mr-1.5 text-emerald-400"></i>Kiberxavfsizlik (7)
+                    </button>
+                    <button onclick="filterProjects('utility')" class="filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-slate-800/90 text-slate-300 hover:bg-slate-700 border border-slate-700/70 transition-all" data-filter="utility">
+                        <i class="fa-solid fa-screwdriver-wrench mr-1.5 text-amber-400"></i>Foydali Vositalar (7)
+                    </button>
+                </div>
+
+                <!-- 30 ta ilova kartalari konteyneri -->
+                <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- JavaScript orqali 30 ta karta generatsiya qilinadi -->
+                </div>
+
+                <!-- Hech narsa topilmasa -->
+                <div id="no-results" class="hidden text-center py-16 bg-slate-900/50 rounded-2xl border border-slate-800">
+                    <i class="fa-solid fa-folder-open text-4xl text-slate-600 mb-3"></i>
+                    <p class="text-slate-400 text-lg">So'rovingiz bo'yicha ilova topilmadi.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOG'LANISH (CONTACT) -->
+        <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-950/60 border-t border-slate-800/60">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <span class="font-mono text-cyan-400 text-sm uppercase tracking-wider">// Aloqa</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Loyihangiz bormi? Bog'laning!</h2>
+                    <p class="text-slate-400 mt-3 text-sm sm:text-base">Hamkorlik, buyurtmalar yoki texnik savollar bo'yicha menga to'g'ridan-to'g'ri murojaat qilishingiz mumkin.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Chap ustun: Kontakt ma'lumotlari -->
+                    <div class="lg:col-span-5 space-y-5">
+                        <div class="p-6 rounded-2xl bg-cardBg border border-slate-800 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-phone-volume"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-mono">Telefon & SMS</p>
+                                <a href="tel:+998771957888" class="text-lg font-bold text-white hover:text-emerald-400 transition-colors">+998 77 195 78 88</a>
+                            </div>
+                        </div>
+
+                        <div class="p-6 rounded-2xl bg-cardBg border border-slate-800 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/15 text-cyan-400 flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-mono">Manzil</p>
+                                <p class="text-lg font-bold text-white">Samarqand, O'zbekiston 🇺🇿</p>
+                            </div>
+                        </div>
+
+                        <div class="p-6 rounded-2xl bg-cardBg border border-slate-800 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-envelope-open-text"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-mono">Elektron pochta</p>
+                                <p class="text-lg font-bold text-white">shamsiddin.dev@uzbekistan.uz</p>
+                            </div>
+                        </div>
+
+                        <div class="p-6 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-purple-600/10 border border-slate-800">
+                            <h4 class="font-bold text-white mb-3">Tezkor aloqa tugmalari</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <a href="tel:+998771957888" class="px-4 py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-semibold text-sm hover:opacity-90 transition flex items-center gap-2">
+                                    <i class="fa-solid fa-phone"></i> Qo'ng'iroq qilish
+                                </a>
+                                <a href="sms:+998771957888" class="px-4 py-2.5 rounded-xl bg-slate-800 text-white border border-slate-700 font-semibold text-sm hover:border-cyan-400 transition flex items-center gap-2">
+                                    <i class="fa-solid fa-comment-dots text-cyan-400"></i> SMS yuborish
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- O'ng ustun: Xabar yuborish formasi -->
+                    <div class="lg:col-span-7">
+                        <form id="contact-form" onsubmit="handleContactSubmit(event)" class="p-6 sm:p-8 rounded-2xl bg-cardBg border border-slate-800 space-y-5">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-xs font-mono text-slate-400 mb-2">Ismingiz *</label>
+                                    <input type="text" id="contact-name" required placeholder="Masalan: Jasurbek" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-cyan-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-mono text-slate-400 mb-2">Telefon raqamingiz *</label>
+                                    <input type="tel" id="contact-phone" required placeholder="+998 90 123 45 67" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-cyan-500">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-slate-400 mb-2">Mavzu</label>
+                                <input type="text" id="contact-subject" placeholder="Veb-sayt yoki dastur yaratish bo'yicha" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-cyan-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-slate-400 mb-2">Xabaringiz *</label>
+                                <textarea id="contact-message" rows="4" required placeholder="Loyihangiz haqida qisqacha yozing..." class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-cyan-500"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold shadow-lg shadow-cyan-500/20 hover:opacity-95 transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>Xabarni yuborish</span>
+                            </button>
+                            <div id="contact-feedback" class="hidden p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-sm text-center"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 border-t border-slate-800 bg-darkBg py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center text-white font-mono font-bold text-sm">
+                    &lt;/&gt;
+                </div>
+                <span class="font-mono font-bold text-white">Shamsiddin<span class="text-cyan-400">.dev</span></span>
+            </div>
+            <p class="text-slate-400 text-sm text-center">
+                &copy; 2026 Shamsiddin. Barcha huquqlar himoyalangan. 30 ta interaktiv ilova bilan jihozlangan.
+            </p>
+            <div class="flex items-center gap-4 text-slate-400">
+                <a href="tel:+998771957888" class="hover:text-emerald-400 transition-colors" title="Telefon"><i class="fa-solid fa-phone"></i></a>
+                <a href="#projects" class="hover:text-cyan-400 transition-colors" title="Ilovalar"><i class="fa-solid fa-cubes"></i></a>
+                <a href="#home" class="hover:text-purple-400 transition-colors" title="Yuqoriga"><i class="fa-solid fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERAKTIV ILOVA MODAL OYNASI -->
+    <div id="app-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md">
+        <div class="bg-slate-900 border border-slate-700/90 rounded-2xl w-full max-w-3xl max-h-[92vh] flex flex-col shadow-2xl shadow-cyan-500/10 modal-animate overflow-hidden">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-5 py-4 bg-slate-950 border-b border-slate-800">
+                <div class="flex items-center gap-3">
+                    <div id="modal-app-icon" class="w-10 h-10 rounded-xl bg-cyan-500/15 text-cyan-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+                    <div>
+                        <h3 id="modal-app-title" class="text-lg font-bold text-white">Ilova nomi</h3>
+                        <p id="modal-app-category" class="text-xs font-mono text-slate-400">Kategoriya</p>
+                    </div>
+                </div>
+                <button onclick="closeAppModal()" aria-label="Yopish" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-rose-500/20 text-slate-300 hover:text-rose-400 flex items-center justify-center transition-colors border border-slate-700">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <!-- Modal Body (Dinamik Ilova Kontenti) -->
+            <div id="modal-app-body" class="p-5 sm:p-6 overflow-y-auto flex-1 text-slate-200">
+                <!-- Har bir ilovaning interfeysi shu yerga yuklanadi -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST XABAR BILDIRISHNOMASI -->
+    <div id="toast-box" class="fixed bottom-5 right-5 z-50 hidden px-5 py-3 rounded-xl bg-slate-900 border border-cyan-500/50 text-white text-sm font-medium shadow-xl flex items-center gap-2.5">
+        <i class="fa-solid fa-circle-check text-cyan-400"></i>
+        <span id="toast-message">Nusxalandi!</span>
+    </div>
+
+    <script>
+        /* =========================================================================
+           1. ASOSIY PORTFOLIO INTERAKTIVLIGI (Typewriter, Navbar, Copy, Toast)
+           ========================================================================= */
+        const roles = [
+            "Full-Stack Web Developer",
+            "Python & Automation Engineer",
+            "Cyber Security Enthusiast",
+            "Interactive App Creator"
+        ];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeWriterLoop() {
+            const target = document.getElementById('typewriter-text');
+            if (!target) return;
+            const currentWord = roles[roleIndex];
+            
+            if (isDeleting) {
+                target.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                target.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let speed = isDeleting ? 45 : 90;
+            if (!isDeleting && charIndex === currentWord.length) {
+                speed = 1800;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                speed = 400;
+            }
+            setTimeout(typeWriterLoop, speed);
+        }
+
+        // Mobil menyuni ochish/yopish
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuIcon.classList.toggle('fa-bars');
+            menuIcon.classList.toggle('fa-xmark');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.add('fa-bars');
+                menuIcon.classList.remove('fa-xmark');
+            });
+        });
+
+        // Toast ko'rsatish
+        function showToast(msg) {
+            const box = document.getElementById('toast-box');
+            const text = document.getElementById('toast-message');
+            text.textContent = msg;
+            box.classList.remove('hidden');
+            setTimeout(() => {
+                box.classList.add('hidden');
+            }, 2600);
+        }
+
+        // Matnni buferga nusxalash (iFrame xavfsiz usul)
+        function copyToClipboard(str, successMsg = "Buferga nusxalandi!") {
+            const el = document.createElement('textarea');
+            el.value = str;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            showToast(successMsg);
+        }
+
+        function copyProfileCode() {
+            const codeText = document.getElementById('developer-code-block').innerText;
+            copyToClipboard(codeText, "Developer kodi nusxalandi!");
+            const lbl = document.getElementById('copy-label');
+            lbl.textContent = "Copied!";
+            setTimeout(() => lbl.textContent = "Copy", 2000);
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('contact-name').value;
+            const feedback = document.getElementById('contact-feedback');
+            feedback.textContent = `Rahmat, ${name}! Xabaringiz muvaffaqiyatli qabul qilindi. Tez orada +998 77 195 78 88 raqami orqali bog'lanaman.`;
+            feedback.classList.remove('hidden');
+            e.target.reset();
+        }
+
+        /* =========================================================================
+           2. 30 TA ISHLAYDIGAN MINI-ILOVALAR KATALOGI
+           ========================================================================= */
+        const appsCatalog = [
+            { id: 1, title: "Ilmiy Kalkulyator", category: "web", catLabel: "Web Ilova", icon: "fa-calculator", color: "cyan", desc: "Sinus, kosinus, ildiz, daraja va murakkab matematik amallarni bajaruvchi to'liq kalkulyator." },
+            { id: 2, title: "Parol Generator & Analizator", category: "security", catLabel: "Kiberxavfsizlik", icon: "fa-key", color: "emerald", desc: "Kuchli parollar yaratish va mavjud parolning buzilishga bardoshliligini tahlil qilish." },
+            { id: 3, title: "SHA-256 & Base64 Kriptografiya", category: "security", catLabel: "Kiberxavfsizlik", icon: "fa-lock", color: "emerald", desc: "Matnlarni SHA-256/SHA-512 xeshlash hamda Base64 formatiga shifrlash va deshifrlash." },
+            { id: 4, title: "Ilon O'yini (Snake)", category: "game", catLabel: "O'yin", icon: "fa-staff-snake", color: "purple", desc: "Klassik arkada o'yini! Klaviatura yoki sensorli tugmalar bilan ilonni boshqaring." },
+            { id: 5, title: "X-O (Tic-Tac-Toe AI)", category: "game", catLabel: "O'yin", icon: "fa-xmark", color: "purple", desc: "Aqlli sun'iy intellekt (AI) botiga qarshi klassik X-O mantiqiy o'yini." },
+            { id: 6, title: "Xotira Kartalari (Memory)", category: "game", catLabel: "O'yin", icon: "fa-brain", color: "purple", desc: "Bir xil dasturlash ikonkalarini juftlab topish orqali xotirangizni sinang." },
+            { id: 7, title: "Tez Yozish Testi (WPM)", category: "utility", catLabel: "Foydali Vosita", icon: "fa-keyboard", color: "amber", desc: "1 daqiqada nechta so'z yozishingizni (WPM) va aniqlik foizingizni o'lchang." },
+            { id: 8, title: "Pomodoro Fokus Taymer", category: "utility", catLabel: "Foydali Vosita", icon: "fa-clock", color: "amber", desc: "25 daqiqa chuqur ish va 5 daqiqa tanaffus texnikasi bilan samaradorlikni oshiring." },
+            { id: 9, title: "Vazifalar Ro'yxati (To-Do)", category: "web", catLabel: "Web Ilova", icon: "fa-list-check", color: "cyan", desc: "Kunlik rejalarni qo'shish, bajarilganini belgilash va LocalStorage'da saqlash." },
+            { id: 10, title: "Valyuta Konvertori (UZS/USD)", category: "web", catLabel: "Web Ilova", icon: "fa-coins", color: "cyan", desc: "O'zbek so'mi (UZS), AQSH dollari (USD), Yevro (EUR) va Rubl (RUB) tezkor hisoblagichi." },
+            { id: 11, title: "QR Kod Yaratuvchi", category: "utility", catLabel: "Foydali Vosita", icon: "fa-qrcode", color: "amber", desc: "Istalgan havola, matn yoki telefon raqam uchun bir zumda QR kod generatsiya qiling." },
+            { id: 12, title: "Ranglar Palitrasi & HEX/RGB", category: "web", catLabel: "Web Ilova", icon: "fa-palette", color: "cyan", desc: "Dizaynerlar uchun tasodifiy ranglar palitrasi va HEX-RGB kod konvertori." },
+            { id: 13, title: "Tosh-Qaychi-Qog'oz", category: "game", catLabel: "O'yin", icon: "fa-hand-scissors", color: "purple", desc: "Kompyuterga qarshi tezkor reaksiya va omad o'yini, hisoblar jadvali bilan." },
+            { id: 14, title: "Sonni Top O'yini", category: "game", catLabel: "O'yin", icon: "fa-dice", color: "purple", desc: "1 dan 100 gacha yashirilgan sirli sonni minimal urinishda topish o'yini." },
+            { id: 15, title: "Reaksiya Tezligi Testi", category: "game", catLabel: "O'yin", icon: "fa-bolt", color: "purple", desc: "Ekran yashil rangga kirganda qanchalik tez (millisekundda) bosa olasiz?" },
+            { id: 16, title: "BMI (Tana Vazni) Kalkulyatori", category: "utility", catLabel: "Foydali Vosita", icon: "fa-heart-pulse", color: "amber", desc: "Bo'y va vazn ko'rsatkichlari asosida sog'lom tana vazni indeksini aniqlang." },
+            { id: 17, title: "Matn Tahlilchisi (Word Counter)", category: "utility", catLabel: "Foydali Vosita", icon: "fa-align-left", color: "amber", desc: "So'zlar, belgilar, gaplar sonini hisoblash va matn registrini o'zgartirish." },
+            { id: 18, title: "Sekundomer & Doiralar", category: "utility", catLabel: "Foydali Vosita", icon: "fa-stopwatch", color: "amber", desc: "Millisekund aniqligidagi sekundomer va natijalarni (Lap) qayd etish tizimi." },
+            { id: 19, title: "IPv4 Subnet Kalkulyator", category: "security", catLabel: "Kiberxavfsizlik", icon: "fa-network-wired", color: "emerald", desc: "IP manzil va CIDR maskasi bo'yicha tarmoq, broadcast va hostlar sonini hisoblash." },
+            { id: 20, title: "XSS & SQLi Zaiflik Tekshiruvchi", category: "security", catLabel: "Kiberxavfsizlik", icon: "fa-bug-slash", color: "emerald", desc: "Kiritilgan matnda XSS skriptlari va SQL Injection xavfini aniqlash hamda tozalash." },
+            { id: 21, title: "Sezar Shifrlash (Caesar Cipher)", category: "security", catLabel: "Kiberxavfsizlik", icon: "fa-user-secret", color: "emerald", desc: "Tarixiy kriptografik siljitish algoritmi yordamida maxfiy xabarlar yozish." },
+            { id: 22, title: "2048 Boshqotirma O'yini", category: "game", catLabel: "O'yin", icon: "fa-table-cells", color: "purple", desc: "Bir xil raqamlarni birlashtirib 2048 plitkasiga yetib boring!" },
+            { id: 23, title: "Kiber-Bug Tutish (Whack-a-Bug)", category: "game", catLabel: "O'yin", icon: "fa-spider", color: "purple", desc: "30 soniya ichida tizimga kirgan xavfli xatolarni (Bug) tutib ball yig'ing." },
+            { id: 24, title: "Chizish Doskasi (Paint Canvas)", category: "web", catLabel: "Web Ilova", icon: "fa-paintbrush", color: "cyan", desc: "Turli rang va qalinlikdagi mo'yqalamlar bilan rasm chizing va PNG qilib yuklang." },
+            { id: 25, title: "Jonli Markdown Muharriri", category: "web", catLabel: "Web Ilova", icon: "fa-file-code", color: "cyan", desc: "Markdown sintaksisida yozing va real vaqt rejimida HTML ko'rinishini kuzating." },
+            { id: 26, title: "JSON Formatlovchi & Validator", category: "utility", catLabel: "Foydali Vosita", icon: "fa-brackets-curly", color: "amber", desc: "Tartibsiz JSON ma'lumotlarni chiroyli formatlash, siqish va xatosini tekshirish." },
+            { id: 27, title: "Birliklar Konvertori", category: "utility", catLabel: "Foydali Vosita", icon: "fa-ruler-combined", color: "amber", desc: "Uzunlik (km/mil), og'irlik (kg/funt) va harorat (°C/°F/K) o'lchov konvertori." },
+            { id: 28, title: "Morze Alifbosi Tarjimoni", category: "security", catLabel: "Kiberxavfsizlik", icon: "fa-tower-broadcast", color: "emerald", desc: "Matnni Morze kodiga (nuqta va chiziqchalar) o'girish va ovozli eshittirish." },
+            { id: 29, title: "Tasodifiy Qaror & Kubik", category: "game", catLabel: "O'yin", icon: "fa-dharmachakra", color: "purple", desc: "Variantlar orasidan tasodifiy tanlash, tanga tashlash va o'yin kubigini otish." },
+            { id: 30, title: "Shaxsiy Byudjet Hisoblagichi", category: "web", catLabel: "Web Ilova", icon: "fa-wallet", color: "cyan", desc: "Daromad va xarajatlarni nazorat qilish, sof balansni avtomatik hisoblash." }
+        ];
+
+        let currentFilter = 'all';
+
+        // Kartalarni ekranga chizish
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            const noResults = document.getElementById('no-results');
+            const searchQuery = document.getElementById('app-search-input').value.toLowerCase().trim();
+
+            const filtered = appsCatalog.filter(app => {
+                const matchesCat = currentFilter === 'all' || app.category === currentFilter;
+                const matchesSearch = app.title.toLowerCase().includes(searchQuery) || app.desc.toLowerCase().includes(searchQuery);
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+
+            const badgeColors = {
+                cyan: "bg-cyan-500/15 text-cyan-400 border-cyan-500/30",
+                purple: "bg-purple-500/15 text-purple-400 border-purple-500/30",
+                emerald: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+                amber: "bg-amber-500/15 text-amber-400 border-amber-500/30"
+            };
+
+            const iconBgColors = {
+                cyan: "bg-cyan-500/15 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-950",
+                purple: "bg-purple-500/15 text-purple-400 group-hover:bg-purple-500 group-hover:text-white",
+                emerald: "bg-emerald-500/15 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-slate-950",
+                amber: "bg-amber-500/15 text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950"
+            };
+
+            grid.innerHTML = filtered.map(app => `
+                <div class="group p-6 rounded-2xl bg-cardBg/95 border border-slate-800 glow-card transition-all duration-300 flex flex-col justify-between hover:-translate-y-1">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl ${iconBgColors[app.color]} flex items-center justify-center text-xl transition-colors duration-300">
+                                <i class="fa-solid ${app.icon}"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs font-mono border ${badgeColors[app.color]}">
+                                #${String(app.id).padStart(2, '0')} • ${app.catLabel}
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors mb-2">
+                            ${app.title}
+                        </h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                            ${app.desc}
+                        </p>
+                    </div>
+                    <button onclick="openAppModal(${app.id})" class="w-full py-3 px-4 rounded-xl bg-slate-800/90 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-purple-600 text-slate-200 hover:text-white font-semibold text-sm border border-slate-700 hover:border-transparent transition-all flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-play text-xs"></i>
+                        <span>Ishga tushirish</span>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Kategoriya bo'yicha filtrlash
+        function filterProjects(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.className = "filter-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-cyan-500 text-slate-950 transition-all shadow-lg shadow-cyan-500/20";
+                } else {
+                    btn.className = "filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-slate-800/90 text-slate-300 hover:bg-slate-700 border border-slate-700/70 transition-all";
+                }
+            });
+            renderProjects();
+        }
+
+        /* =========================================================================
+           3. MODAL BOSHQARUVI VA TOZALASH (CLEANUP) TIZIMI
+           ========================================================================= */
+        let activeCleanup = null; // Modal yopilganda taymer va listenerlarni tozalash funksiyasi
+
+        function openAppModal(appId) {
+            const app = appsCatalog.find(a => a.id === appId);
+            if (!app) return;
+
+            if (activeCleanup) {
+                try { activeCleanup(); } catch (e) {}
+                activeCleanup = null;
+            }
+
+            const modal = document.getElementById('app-modal');
+            const titleEl = document.getElementById('modal-app-title');
+            const catEl = document.getElementById('modal-app-category');
+            const iconEl = document.getElementById('modal-app-icon');
+            const bodyEl = document.getElementById('modal-app-body');
+
+            titleEl.textContent = app.title;
+            catEl.textContent = `Ilova #${app.id} • ${app.catLabel}`;
+            iconEl.innerHTML = `<i class="fa-solid ${app.icon}"></i>`;
+            bodyEl.innerHTML = '';
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            // Tegishli ilovani ishga tushirish
+            launchAppLogic(appId, bodyEl);
+        }
+
+        function closeAppModal() {
+            if (activeCleanup) {
+                try { activeCleanup(); } catch (e) {}
+                activeCleanup = null;
+            }
+            const modal = document.getElementById('app-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+            document.getElementById('modal-app-body').innerHTML = '';
+        }
+
+        // Tashqi fon bosilganda modalni yopish
+        document.getElementById('app-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'app-modal') closeAppModal();
+        });
+
+        /* =========================================================================
+           4. 30 TA TO'LIQ ISHLAYDIGAN ILOVA LOGIKASI
+           ========================================================================= */
+        function launchAppLogic(id, container) {
+            switch (id) {
+                /* -----------------------------------------------------------------
+                   #1 ILMIY KALKULYATOR
+                   ----------------------------------------------------------------- */
+                case 1: {
+                    let expr = "";
+                    container.innerHTML = `
+                        <div class="max-w-md mx-auto space-y-4">
+                            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-right font-mono">
+                                <div id="calc-history" class="text-xs text-slate-500 h-5 overflow-hidden"></div>
+                                <input id="calc-display" type="text" readonly value="0" class="w-full bg-transparent text-2xl sm:text-3xl font-bold text-cyan-400 text-right focus:outline-none">
+                            </div>
+                            <div class="grid grid-cols-4 gap-2 font-mono text-sm">
+                                ${['sin(','cos(','tan(','√(','(',')','^','C','7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+'].map(btn => {
+                                    let cls = "py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold transition";
+                                    if (btn === '=') cls = "py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold";
+                                    if (btn === 'C') cls = "py-3.5 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold";
+                                    if (['/','*','-','+','^','sin(','cos(','tan(','√('].includes(btn)) cls = "py-3.5 rounded-xl bg-slate-800/60 text-cyan-400 hover:bg-slate-700 font-semibold";
+                                    return `<button class="${cls}" data-val="${btn}">${btn}</button>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                    const display = container.querySelector('#calc-display');
+                    const hist = container.querySelector('#calc-history');
+                    container.querySelectorAll('button').forEach(b => {
+                        b.onclick = () => {
+                            const v = b.dataset.val;
+                            if (v === 'C') { expr = ""; display.value = "0"; hist.textContent = ""; }
+                            else if (v === '=') {
+                                try {
+                                    hist.textContent = expr;
+                                    let parsed = expr
+                                        .replace(/sin\(/g, 'Math.sin(')
+                                        .replace(/cos\(/g, 'Math.cos(')
+                                        .replace(/tan\(/g, 'Math.tan(')
+                                        .replace(/√\(/g, 'Math.sqrt(')
+                                        .replace(/\^/g, '**');
+                                    const res = Function('"use strict";return (' + parsed + ')')();
+                                    expr = String(Number(res.toFixed(8)));
+                                    display.value = expr;
+                                } catch {
+                                    display.value = "Xato!";
+                                    expr = "";
+                                }
+                            } else {
+                                expr += v;
+                                display.value = expr;
+                            }
+                        };
+                    });
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #2 PAROL GENERATOR & KUCHINI TEKSHIRUVCHI
+                   ----------------------------------------------------------------- */
+                case 2: {
+                    container.innerHTML = `
+                        <div class="space-y-5">
+                            <div class="flex gap-2">
+                                <input id="pg-out" type="text" readonly class="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 font-mono text-emerald-400 text-base">
+                                <button id="pg-copy" class="px-4 py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold hover:opacity-90"><i class="fa-regular fa-copy"></i></button>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-mono">
+                                    <span>Parol uzunligi: <strong id="pg-len-val" class="text-cyan-400">16</strong></span>
+                                    <span id="pg-strength" class="text-emerald-400 font-bold">Juda kuchli</span>
+                                </div>
+                                <input id="pg-len" type="range" min="6" max="36" value="16" class="w-full accent-cyan-500">
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+                                <label class="flex items-center gap-2 p-3 rounded-xl bg-slate-800/70 cursor-pointer"><input type="checkbox" id="pg-up" checked class="accent-cyan-500"> Katta (A-Z)</label>
+                                <label class="flex items-center gap-2 p-3 rounded-xl bg-slate-800/70 cursor-pointer"><input type="checkbox" id="pg-low" checked class="accent-cyan-500"> Kichik (a-z)</label>
+                                <label class="flex items-center gap-2 p-3 rounded-xl bg-slate-800/70 cursor-pointer"><input type="checkbox" id="pg-num" checked class="accent-cyan-500"> Raqam (0-9)</label>
+                                <label class="flex items-center gap-2 p-3 rounded-xl bg-slate-800/70 cursor-pointer"><input type="checkbox" id="pg-sym" checked class="accent-cyan-500"> Belgilar (!@#)</label>
+                            </div>
+                            <button id="pg-gen" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 font-bold">Yangi Parol Yaratish</button>
+                        </div>
+                    `;
+                    const generate = () => {
+                        const len = +container.querySelector('#pg-len').value;
+                        container.querySelector('#pg-len-val').textContent = len;
+                        let chars = "";
+                        if (container.querySelector('#pg-up').checked) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                        if (container.querySelector('#pg-low').checked) chars += "abcdefghijklmnopqrstuvwxyz";
+                        if (container.querySelector('#pg-num').checked) chars += "0123456789";
+                        if (container.querySelector('#pg-sym').checked) chars += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+                        if (!chars) chars = "abcdefghijklmnopqrstuvwxyz";
+                        let pass = "";
+                        const arr = new Uint32Array(len);
+                        crypto.getRandomValues(arr);
+                        for (let i = 0; i < len; i++) pass += chars[arr[i] % chars.length];
+                        container.querySelector('#pg-out').value = pass;
+                        const st = container.querySelector('#pg-strength');
+                        if (len < 9) { st.textContent = "Zaif"; st.className = "text-rose-400 font-bold"; }
+                        else if (len < 13) { st.textContent = "O'rtacha"; st.className = "text-amber-400 font-bold"; }
+                        else { st.textContent = "Juda kuchli (Kiber-himoyalangan)"; st.className = "text-emerald-400 font-bold"; }
+                    };
+                    container.querySelector('#pg-gen').onclick = generate;
+                    container.querySelector('#pg-len').oninput = generate;
+                    container.querySelector('#pg-copy').onclick = () => copyToClipboard(container.querySelector('#pg-out').value, "Parol nusxalandi!");
+                    generate();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #3 SHA-256 & BASE64 KRIPTOGRAFIYA VOSITASI
+                   ----------------------------------------------------------------- */
+                case 3: {
+                    container.innerHTML = `
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs font-mono text-slate-400">Kiruvchi matn:</label>
+                                <textarea id="cr-in" rows="3" placeholder="Shifrlash uchun matn kiriting..." class="w-full mt-1 p-3 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:border-cyan-500 focus:outline-none">Salom Shamsiddin!</textarea>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <button id="cr-sha" class="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs">SHA-256 Hash</button>
+                                <button id="cr-b64e" class="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">Base64 Encode</button>
+                                <button id="cr-b64d" class="px-4 py-2 rounded-xl bg-purple-500 text-white font-bold text-xs">Base64 Decode</button>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center">
+                                    <label class="text-xs font-mono text-slate-400">Natija:</label>
+                                    <button id="cr-copy" class="text-xs text-cyan-400 hover:underline">Nusxalash</button>
+                                </div>
+                                <textarea id="cr-out" rows="3" readonly class="w-full mt-1 p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs text-emerald-400"></textarea>
+                            </div>
+                        </div>
+                    `;
+                    const inp = container.querySelector('#cr-in');
+                    const out = container.querySelector('#cr-out');
+                    const runSha = async () => {
+                        const data = new TextEncoder().encode(inp.value);
+                        const hash = await crypto.subtle.digest('SHA-256', data);
+                        out.value = Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+                    };
+                    container.querySelector('#cr-sha').onclick = runSha;
+                    container.querySelector('#cr-b64e').onclick = () => {
+                        out.value = btoa(unescape(encodeURIComponent(inp.value)));
+                    };
+                    container.querySelector('#cr-b64d').onclick = () => {
+                        try { out.value = decodeURIComponent(escape(atob(inp.value.trim()))); }
+                        catch { out.value = "Xato: Yaroqsiz Base64 kod!"; }
+                    };
+                    container.querySelector('#cr-copy').onclick = () => copyToClipboard(out.value);
+                    runSha();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #4 ILON O'YINI (SNAKE CANVAS)
+                   ----------------------------------------------------------------- */
+                case 4: {
+                    container.innerHTML = `
+                        <div class="flex flex-col items-center space-y-4">
+                            <div class="flex justify-between w-full max-w-xs font-mono text-sm">
+                                <span>Ball: <strong id="sn-score" class="text-cyan-400">0</strong></span>
+                                <button id="sn-restart" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-white">Qayta boshlash</button>
+                            </div>
+                            <canvas id="sn-canvas" width="320" height="320" class="rounded-xl bg-slate-950 border-2 border-slate-700"></canvas>
+                            <div class="grid grid-cols-3 gap-2 w-40 sm:hidden">
+                                <div></div><button data-dir="UP" class="p-3 rounded-xl bg-slate-800 text-white"><i class="fa-solid fa-arrow-up"></i></button><div></div>
+                                <button data-dir="LEFT" class="p-3 rounded-xl bg-slate-800 text-white"><i class="fa-solid fa-arrow-left"></i></button>
+                                <button data-dir="DOWN" class="p-3 rounded-xl bg-slate-800 text-white"><i class="fa-solid fa-arrow-down"></i></button>
+                                <button data-dir="RIGHT" class="p-3 rounded-xl bg-slate-800 text-white"><i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                            <p class="text-xs text-slate-400">Boshqarish: Klaviatura strelkalari yoki ekran tugmalari</p>
+                        </div>
+                    `;
+                    const canvas = container.querySelector('#sn-canvas');
+                    const ctx = canvas.getContext('2d');
+                    const box = 16;
+                    let snake, dir, food, score, gameOver;
+
+                    function initSnake() {
+                        snake = [{ x: 10 * box, y: 10 * box }];
+                        dir = "RIGHT";
+                        score = 0;
+                        gameOver = false;
+                        container.querySelector('#sn-score').textContent = score;
+                        food = { x: Math.floor(Math.random() * 19) * box, y: Math.floor(Math.random() * 19) * box };
+                    }
+                    initSnake();
+
+                    const keyHandler = (e) => {
+                        if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key)) e.preventDefault();
+                        if (e.key === "ArrowLeft" && dir !== "RIGHT") dir = "LEFT";
+                        else if (e.key === "ArrowUp" && dir !== "DOWN") dir = "UP";
+                        else if (e.key === "ArrowRight" && dir !== "LEFT") dir = "RIGHT";
+                        else if (e.key === "ArrowDown" && dir !== "UP") dir = "DOWN";
+                    };
+                    document.addEventListener('keydown', keyHandler);
+
+                    container.querySelectorAll('[data-dir]').forEach(btn => {
+                        btn.onclick = () => {
+                            const d = btn.dataset.dir;
+                            if (d === "LEFT" && dir !== "RIGHT") dir = "LEFT";
+                            if (d === "UP" && dir !== "DOWN") dir = "UP";
+                            if (d === "RIGHT" && dir !== "LEFT") dir = "RIGHT";
+                            if (d === "DOWN" && dir !== "UP") dir = "DOWN";
+                        };
+                    });
+                    container.querySelector('#sn-restart').onclick = initSnake;
+
+                    const loop = setInterval(() => {
+                        ctx.fillStyle = "#020617";
+                        ctx.fillRect(0, 0, 320, 320);
+
+                        if (gameOver) {
+                            ctx.fillStyle = "#f43f5e";
+                            ctx.font = "bold 22px Inter";
+                            ctx.textAlign = "center";
+                            ctx.fillText("O'yin Tugadi!", 160, 150);
+                            ctx.fillStyle = "#94a3b8";
+                            ctx.font = "14px Inter";
+                            ctx.fillText(`Natija: ${score} ball`, 160, 180);
+                            return;
+                        }
+
+                        // Ovqat
+                        ctx.fillStyle = "#f43f5e";
+                        ctx.beginPath();
+                        ctx.arc(food.x + box/2, food.y + box/2, box/2.3, 0, Math.PI * 2);
+                        ctx.fill();
+
+                        // Ilon
+                        snake.forEach((s, i) => {
+                            ctx.fillStyle = i === 0 ? "#22d3ee" : "#0891b2";
+                            ctx.fillRect(s.x, s.y, box - 1, box - 1);
+                        });
+
+                        let headX = snake[0].x;
+                        let headY = snake[0].y;
+                        if (dir === "LEFT") headX -= box;
+                        if (dir === "UP") headY -= box;
+                        if (dir === "RIGHT") headX += box;
+                        if (dir === "DOWN") headY += box;
+
+                        if (headX < 0 || headX >= 320 || headY < 0 || headY >= 320 || snake.some(s => s.x === headX && s.y === headY)) {
+                            gameOver = true;
+                            return;
+                        }
+
+                        if (headX === food.x && headY === food.y) {
+                            score += 10;
+                            container.querySelector('#sn-score').textContent = score;
+                            food = { x: Math.floor(Math.random() * 19) * box, y: Math.floor(Math.random() * 19) * box };
+                        } else {
+                            snake.pop();
+                        }
+                        snake.unshift({ x: headX, y: headY });
+                    }, 125);
+
+                    activeCleanup = () => {
+                        clearInterval(loop);
+                        document.removeEventListener('keydown', keyHandler);
+                    };
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #5 X-O (TIC-TAC-TOE AI BILAN)
+                   ----------------------------------------------------------------- */
+                case 5: {
+                    let board = Array(9).fill(null);
+                    let active = true;
+                    container.innerHTML = `
+                        <div class="flex flex-col items-center space-y-4">
+                            <div id="xo-status" class="text-base font-bold text-cyan-400">Sizning navbatingiz (X)</div>
+                            <div id="xo-grid" class="grid grid-cols-3 gap-2.5 w-64 h-64"></div>
+                            <button id="xo-reset" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm font-semibold">Yangi o'yin</button>
+                        </div>
+                    `;
+                    const grid = container.querySelector('#xo-grid');
+                    const status = container.querySelector('#xo-status');
+                    const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+                    const checkWin = (b) => {
+                        for (let [a,c,d] of wins) if (b[a] && b[a] === b[c] && b[a] === b[d]) return b[a];
+                        return b.includes(null) ? null : 'DRAW';
+                    };
+
+                    const render = () => {
+                        grid.innerHTML = board.map((val, i) => `
+                            <button data-idx="${i}" class="rounded-xl bg-slate-950 border border-slate-800 hover:border-cyan-500/50 text-3xl font-extrabold flex items-center justify-center ${val === 'X' ? 'text-cyan-400' : 'text-purple-400'}">
+                                ${val || ''}
+                            </button>
+                        `).join('');
+                        grid.querySelectorAll('button').forEach(btn => {
+                            btn.onclick = () => {
+                                const idx = +btn.dataset.idx;
+                                if (!active || board[idx]) return;
+                                board[idx] = 'X';
+                                let res = checkWin(board);
+                                if (!res) {
+                                    // AI yurishi
+                                    const empty = board.map((v, k) => v === null ? k : null).filter(v => v !== null);
+                                    const aiMove = empty[Math.floor(Math.random() * empty.length)];
+                                    if (aiMove !== undefined) board[aiMove] = 'O';
+                                    res = checkWin(board);
+                                }
+                                render();
+                                if (res) {
+                                    active = false;
+                                    status.textContent = res === 'DRAW' ? "Durang!" : (res === 'X' ? "Tabriklaymiz, siz yutdingiz! 🎉" : "AI Bot yutdi! 🤖");
+                                }
+                            };
+                        });
+                    };
+                    container.querySelector('#xo-reset').onclick = () => {
+                        board = Array(9).fill(null); active = true;
+                        status.textContent = "Sizning navbatingiz (X)"; render();
+                    };
+                    render();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #6 XOTIRA KARTALARI (MEMORY MATCH)
+                   ----------------------------------------------------------------- */
+                case 6: {
+                    const icons = ['fa-code','fa-bug','fa-shield-halved','fa-terminal','fa-database','fa-microchip','fa-robot','fa-rocket'];
+                    let cards = [...icons, ...icons].sort(() => Math.random() - 0.5);
+                    let flipped = [], matched = [], moves = 0;
+
+                    container.innerHTML = `
+                        <div class="flex flex-col items-center space-y-4">
+                            <div class="flex justify-between w-full max-w-sm text-sm font-mono">
+                                <span>Urinishlar: <strong id="mem-moves" class="text-cyan-400">0</strong></span>
+                                <button id="mem-reset" class="text-xs px-3 py-1 rounded-lg bg-slate-800">Qayta</button>
+                            </div>
+                            <div id="mem-grid" class="grid grid-cols-4 gap-2.5 w-full max-w-sm"></div>
+                        </div>
+                    `;
+                    const grid = container.querySelector('#mem-grid');
+                    const render = () => {
+                        container.querySelector('#mem-moves').textContent = moves;
+                        grid.innerHTML = cards.map((ic, i) => {
+                            const isOpen = flipped.includes(i) || matched.includes(i);
+                            return `<button data-i="${i}" class="h-16 sm:h-20 rounded-xl border ${isOpen ? 'bg-cyan-500/20 border-cyan-400 text-cyan-300' : 'bg-slate-950 border-slate-800 text-slate-700 hover:border-slate-600'} text-2xl flex items-center justify-center transition-all">
+                                <i class="fa-solid ${isOpen ? ic : 'fa-question'}"></i>
+                            </button>`;
+                        }).join('');
+                        grid.querySelectorAll('button').forEach(b => {
+                            b.onclick = () => {
+                                const idx = +b.dataset.i;
+                                if (flipped.length === 2 || flipped.includes(idx) || matched.includes(idx)) return;
+                                flipped.push(idx);
+                                render();
+                                if (flipped.length === 2) {
+                                    moves++;
+                                    const [a, c] = flipped;
+                                    if (cards[a] === cards[c]) {
+                                        matched.push(a, c);
+                                        flipped = [];
+                                        render();
+                                        if (matched.length === cards.length) showToast(`Ajoyib! ${moves} ta urinishda topdingiz!`);
+                                    } else {
+                                        setTimeout(() => { flipped = []; render(); }, 650);
+                                    }
+                                }
+                            };
+                        });
+                    };
+                    container.querySelector('#mem-reset').onclick = () => {
+                        cards = [...icons, ...icons].sort(() => Math.random() - 0.5);
+                        flipped = []; matched = []; moves = 0; render();
+                    };
+                    render();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #7 TEZ YOZISH TESTI (WPM)
+                   ----------------------------------------------------------------- */
+                case 7: {
+                    const sample = "Dasturlash bu kelajak tilidir. Toza kod yozish va algoritmlarni tushunish har bir dasturchining eng muhim mahoratidir.";
+                    let startTime = null;
+                    container.innerHTML = `
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 font-mono text-sm leading-relaxed select-none">${sample}</div>
+                            <textarea id="wpm-in" rows="3" placeholder="Yuqoridagi matnni tez va xatosiz yozishni boshlang..." class="w-full p-3.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono text-sm focus:border-cyan-500 focus:outline-none"></textarea>
+                            <div class="grid grid-cols-2 gap-4 text-center">
+                                <div class="p-3 rounded-xl bg-slate-800/70"><div class="text-xs text-slate-400">Tezlik (WPM)</div><div id="wpm-speed" class="text-2xl font-bold text-cyan-400 font-mono">0</div></div>
+                                <div class="p-3 rounded-xl bg-slate-800/70"><div class="text-xs text-slate-400">Aniqlik</div><div id="wpm-acc" class="text-2xl font-bold text-emerald-400 font-mono">100%</div></div>
+                            </div>
+                        </div>
+                    `;
+                    const inp = container.querySelector('#wpm-in');
+                    inp.oninput = () => {
+                        if (!startTime) startTime = Date.now();
+                        const typed = inp.value;
+                        const mins = (Date.now() - startTime) / 60000;
+                        const words = typed.trim().split(/\s+/).length;
+                        const wpm = mins > 0 ? Math.round(words / mins) : 0;
+                        let correct = 0;
+                        for (let i = 0; i < typed.length; i++) if (typed[i] === sample[i]) correct++;
+                        const acc = typed.length ? Math.round((correct / typed.length) * 100) : 100;
+                        container.querySelector('#wpm-speed').textContent = wpm;
+                        container.querySelector('#wpm-acc').textContent = acc + "%";
+                    };
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #8 POMODORO TAYMER
+                   ----------------------------------------------------------------- */
+                case 8: {
+                    let seconds = 25 * 60, timer = null;
+                    container.innerHTML = `
+                        <div class="text-center space-y-6 py-4">
+                            <div class="flex justify-center gap-2">
+                                <button id="pom-25" class="px-4 py-1.5 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">Fokus (25m)</button>
+                                <button id="pom-5" class="px-4 py-1.5 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs">Tanaffus (5m)</button>
+                            </div>
+                            <div id="pom-time" class="text-6xl font-mono font-extrabold text-white tracking-wider">25:00</div>
+                            <div class="flex justify-center gap-3">
+                                <button id="pom-start" class="px-6 py-3 rounded-xl bg-emerald-500 text-slate-950 font-bold">Boshlash</button>
+                                <button id="pom-pause" class="px-6 py-3 rounded-xl bg-amber-500 text-slate-950 font-bold">To'xtatish</button>
+                                <button id="pom-reset" class="px-6 py-3 rounded-xl bg-slate-800 text-white font-bold">Qayta</button>
+                            </div>
+                        </div>
+                    `;
+                    const updateDisplay = () => {
+                        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+                        const s = String(seconds % 60).padStart(2, '0');
+                        container.querySelector('#pom-time').textContent = `${m}:${s}`;
+                    };
+                    container.querySelector('#pom-25').onclick = () => { clearInterval(timer); timer = null; seconds = 25 * 60; updateDisplay(); };
+                    container.querySelector('#pom-5').onclick = () => { clearInterval(timer); timer = null; seconds = 5 * 60; updateDisplay(); };
+                    container.querySelector('#pom-start').onclick = () => {
+                        if (timer) return;
+                        timer = setInterval(() => {
+                            if (seconds > 0) { seconds--; updateDisplay(); }
+                            else { clearInterval(timer); timer = null; showToast("Pomodoro vaqti tugadi!"); }
+                        }, 1000);
+                    };
+                    container.querySelector('#pom-pause').onclick = () => { clearInterval(timer); timer = null; };
+                    container.querySelector('#pom-reset').onclick = () => { clearInterval(timer); timer = null; seconds = 25 * 60; updateDisplay(); };
+                    activeCleanup = () => clearInterval(timer);
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #9 VAZIFALAR RO'YXATI (TO-DO LIST)
+                   ----------------------------------------------------------------- */
+                case 9: {
+                    let todos = JSON.parse(localStorage.getItem('shamsi_todos') || '[{"text":"Portfolio saytni tekshirish","done":true},{"text":"Yangi Python skript yozish","done":false}]');
+                    container.innerHTML = `
+                        <div class="space-y-4">
+                            <form id="td-form" class="flex gap-2">
+                                <input id="td-in" type="text" required placeholder="Yangi vazifa qo'shish..." class="flex-1 px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white">
+                                <button type="submit" class="px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-bold text-sm">Qo'shish</button>
+                            </form>
+                            <div id="td-list" class="space-y-2 max-h-64 overflow-y-auto"></div>
+                        </div>
+                    `;
+                    const saveAndRender = () => {
+                        localStorage.setItem('shamsi_todos', JSON.stringify(todos));
+                        const list = container.querySelector('#td-list');
+                        list.innerHTML = todos.map((t, i) => `
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-950 border border-slate-800">
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" ${t.done ? 'checked' : ''} data-toggle="${i}" class="accent-cyan-500 w-4 h-4">
+                                    <span class="text-sm ${t.done ? 'line-through text-slate-500' : 'text-slate-200'}">${t.text}</span>
+                                </label>
+                                <button data-del="${i}" class="text-rose-400 hover:text-rose-300 text-xs px-2"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `).join('');
+                        list.querySelectorAll('[data-toggle]').forEach(cb => cb.onchange = () => { todos[cb.dataset.toggle].done = cb.checked; saveAndRender(); });
+                        list.querySelectorAll('[data-del]').forEach(btn => btn.onclick = () => { todos.splice(btn.dataset.del, 1); saveAndRender(); });
+                    };
+                    container.querySelector('#td-form').onsubmit = (e) => {
+                        e.preventDefault();
+                        const val = container.querySelector('#td-in').value.trim();
+                        if (val) { todos.unshift({ text: val, done: false }); container.querySelector('#td-in').value = ''; saveAndRender(); }
+                    };
+                    saveAndRender();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #10 VALYUTA KONVERTORI (UZS/USD/EUR/RUB)
+                   ----------------------------------------------------------------- */
+                case 10: {
+                    const rates = { UZS: 1, USD: 12850, EUR: 13900, RUB: 132 };
+                    container.innerHTML = `
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <input id="cur-amt" type="number" value="100" class="px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono">
+                                <select id="cur-from" class="px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-cyan-400 font-bold">
+                                    <option value="USD">USD ($)</option><option value="UZS">UZS (so'm)</option><option value="EUR">EUR (€)</option><option value="RUB">RUB (₽)</option>
+                                </select>
+                                <select id="cur-to" class="px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-purple-400 font-bold">
+                                    <option value="UZS">UZS (so'm)</option><option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="RUB">RUB (₽)</option>
+                                </select>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-slate-950 border border-slate-800 text-center">
+                                <div class="text-xs text-slate-400 font-mono mb-1">Hisoblangan qiymat:</div>
+                                <div id="cur-res" class="text-3xl font-extrabold text-emerald-400 font-mono">1,285,000 UZS</div>
+                            </div>
+                        </div>
+                    `;
+                    const calc = () => {
+                        const amt = parseFloat(container.querySelector('#cur-amt').value) || 0;
+                        const f = container.querySelector('#cur-from').value;
+                        const t = container.querySelector('#cur-to').value;
+                        const inUzs = amt * rates[f];
+                        const res = inUzs / rates[t];
+                        container.querySelector('#cur-res').textContent = `${res.toLocaleString('en-US', { maximumFractionDigits: 2 })} ${t}`;
+                    };
+                    container.querySelector('#cur-amt').oninput = calc;
+                    container.querySelector('#cur-from').onchange = calc;
+                    container.querySelector('#cur-to').onchange = calc;
+                    calc();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #11 QR KOD YARATUVCHI
+                   ----------------------------------------------------------------- */
+                case 11: {
+                    container.innerHTML = `
+                        <div class="flex flex-col items-center space-y-4">
+                            <input id="qr-in" type="text" value="tel:+998771957888" placeholder="Havola yoki matn kiriting..." class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm">
+                            <div id="qr-box" class="p-4 bg-white rounded-2xl shadow-lg"></div>
+                            <p class="text-xs text-slate-400">Matnni o'zgartiring — QR kod avtomatik yangilanadi</p>
+                        </div>
+                    `;
+                    const box = container.querySelector('#qr-box');
+                    const makeQR = () => {
+                        box.innerHTML = '';
+                        const txt = container.querySelector('#qr-in').value.trim() || "Shamsiddin.dev";
+                        new QRCode(box, { text: txt, width: 180, height: 180, colorDark: "#090d16", colorLight: "#ffffff" });
+                    };
+                    container.querySelector('#qr-in').oninput = makeQR;
+                    makeQR();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #12 RANGLAR PALITRASI & HEX/RGB KONVERTOR
+                   ----------------------------------------------------------------- */
+                case 12: {
+                    container.innerHTML = `
+                        <div class="space-y-4">
+                            <div id="pal-grid" class="grid grid-cols-5 gap-2 h-32"></div>
+                            <button id="pal-gen" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold text-sm">Yangi Palitra Generatsiya Qilish</button>
+                            <p class="text-xs text-center text-slate-400">Nusxalash uchun istalgan rang ustiga bosing</p>
+                        </div>
+                    `;
+                    const genPal = () => {
+                        const grid = container.querySelector('#pal-grid');
+                        grid.innerHTML = Array.from({length: 5}, () => {
+                            const hex = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+                            return `<button onclick="copyToClipboard('${hex}', '${hex} nusxalandi!')" style="background:${hex}" class="rounded-xl flex items-end justify-center p-2 text-xs font-mono font-bold text-white shadow-inner hover:scale-105 transition">
+                                <span class="bg-slate-950/70 px-1.5 py-0.5 rounded">${hex}</span>
+                            </button>`;
+                        }).join('');
+                    };
+                    container.querySelector('#pal-gen').onclick = genPal;
+                    genPal();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #13 TOSH-QAYCHI-QOG'OZ
+                   ----------------------------------------------------------------- */
+                case 13: {
+                    let uScore = 0, bScore = 0;
+                    const choices = [
+                        { id: 'tosh', name: 'Tosh', icon: 'fa-hand-back-fist' },
+                        { id: 'qaychi', name: 'Qaychi', icon: 'fa-hand-scissors' },
+                        { id: 'qogoz', name: 'Qog\'oz', icon: 'fa-hand' }
+                    ];
+                    container.innerHTML = `
+                        <div class="text-center space-y-5">
+                            <div class="flex justify-around p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono">
+                                <div>Siz: <strong id="rps-u" class="text-cyan-400 text-xl">0</strong></div>
+                                <div>Bot: <strong id="rps-b" class="text-purple-400 text-xl">0</strong></div>
+                            </div>
+                            <div id="rps-res" class="text-base font-bold text-slate-200 h-6">Tanlang!</div>
+                            <div class="grid grid-cols-3 gap-3">
+                                ${choices.map(c => `
+                                    <button data-c="${c.id}" class="p-5 rounded-2xl bg-slate-800 hover:bg-cyan-500/20 border border-slate-700 hover:border-cyan-400 flex flex-col items-center gap-2 transition">
+                                        <i class="fa-solid ${c.icon} text-3xl text-cyan-400"></i>
+                                        <span class="text-sm font-semibold">${c.name}</span>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                    container.querySelectorAll('[data-c]').forEach(btn => {
+                        btn.onclick = () => {
+                            const u = btn.dataset.c;
+                            const b = choices[Math.floor(Math.random() * 3)].id;
+                            let msg = "";
+                            if (u === b) msg = `Durang! Ikkalangiz ham ${u} tanladingiz.`;
+                            else if ((u === 'tosh' && b === 'qaychi') || (u === 'qaychi' && b === 'qogoz') || (u === 'qogoz' && b === 'tosh')) {
+                                uScore++; msg = `Siz yutdingiz! (${u} vs ${b}) 🎉`;
+                            } else {
+                                bScore++; msg = `Bot yutdi! (${u} vs ${b}) 🤖`;
+                            }
+                            container.querySelector('#rps-u').textContent = uScore;
+                            container.querySelector('#rps-b').textContent = bScore;
+                            container.querySelector('#rps-res').textContent = msg;
+                        };
+                    });
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #14 SONNI TOP O'YINI
+                   ----------------------------------------------------------------- */
+                case 14: {
+                    let secret = Math.floor(Math.random() * 100) + 1;
+                    let tries = 0;
+                    container.innerHTML = `
+                        <div class="text-center space-y-4 max-w-sm mx-auto">
+                            <p class="text-sm text-slate-300">Men <strong class="text-cyan-400">1 dan 100 gacha</strong> bir son o'yladim. Topa olasizmi?</p>
+                            <div class="flex gap-2">
+                                <input id="ng-in" type="number" min="1" max="100" placeholder="Son..." class="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-center text-lg font-mono text-white">
+                                <button id="ng-btn" class="px-5 py-3 rounded-xl bg-purple-600 text-white font-bold">Tekshirish</button>
+                            </div>
+                            <div id="ng-hint" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-sm font-medium text-amber-300">Taxminingizni kiriting</div>
+                            <button id="ng-reset" class="text-xs text-slate-400 hover:text-cyan-400 underline">Yangi son o'ylash</button>
+                        </div>
+                    `;
+                    container.querySelector('#ng-btn').onclick = () => {
+                        const val = +container.querySelector('#ng-in').value;
+                        if (!val) return;
+                        tries++;
+                        const hint = container.querySelector('#ng-hint');
+                        if (val === secret) { hint.textContent = `Topdingiz! ${secret} sonini ${tries} ta urinishda topdingiz! 🎉`; hint.className = "p-3 rounded-xl bg-emerald-500/20 border border-emerald-500 text-emerald-300 font-bold"; }
+                        else if (val < secret) hint.textContent = `Kattaroq son kiriting! (Urinish: ${tries})`;
+                        else hint.textContent = `Kichikroq son kiriting! (Urinish: ${tries})`;
+                    };
+                    container.querySelector('#ng-reset').onclick = () => {
+                        secret = Math.floor(Math.random() * 100) + 1; tries = 0;
+                        container.querySelector('#ng-hint').textContent = "Yangi son o'ylandi!";
+                    };
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #15 REAKSIYA TEZLIGI TESTI
+                   ----------------------------------------------------------------- */
+                case 15: {
+                    let state = 'idle', start = 0, tId = null;
+                    container.innerHTML = `
+                        <div id="rt-box" class="h-56 rounded-2xl bg-slate-800 border-2 border-slate-700 flex flex-col items-center justify-center cursor-pointer select-none transition-colors p-6 text-center">
+                            <i class="fa-solid fa-bolt text-4xl text-cyan-400 mb-3"></i>
+                            <div id="rt-text" class="text-xl font-bold text-white">Boshlash uchun bosing</div>
+                            <div id="rt-sub" class="text-xs text-slate-400 mt-1">Ekran yashil bo'lishi bilan darhol bosing!</div>
+                        </div>
+                    `;
+                    const box = container.querySelector('#rt-box');
+                    const txt = container.querySelector('#rt-text');
+                    const sub = container.querySelector('#rt-sub');
+
+                    box.onclick = () => {
+                        if (state === 'idle' || state === 'done') {
+                            state = 'waiting';
+                            box.className = "h-56 rounded-2xl bg-rose-600/80 border-2 border-rose-400 flex flex-col items-center justify-center cursor-pointer select-none p-6 text-center";
+                            txt.textContent = "Kuting... Yashil bo'lishini poylang!";
+                            sub.textContent = "";
+                            tId = setTimeout(() => {
+                                state = 'ready';
+                                start = performance.now();
+                                box.className = "h-56 rounded-2xl bg-emerald-500 border-2 border-emerald-300 flex flex-col items-center justify-center cursor-pointer select-none p-6 text-center";
+                                txt.textContent = "HOZIR BOSING!";
+                            }, 1500 + Math.random() * 2500);
+                        } else if (state === 'waiting') {
+                            clearTimeout(tId);
+                            state = 'done';
+                            box.className = "h-56 rounded-2xl bg-amber-600/80 border-2 border-amber-400 flex flex-col items-center justify-center cursor-pointer select-none p-6 text-center";
+                            txt.textContent = "Juda erta bosdingiz!";
+                            sub.textContent = "Qayta urinish uchun bosing";
+                        } else if (state === 'ready') {
+                            const diff = Math.round(performance.now() - start);
+                            state = 'done';
+                            box.className = "h-56 rounded-2xl bg-slate-800 border-2 border-cyan-500 flex flex-col items-center justify-center cursor-pointer select-none p-6 text-center";
+                            txt.textContent = `${diff} ms`;
+                            sub.textContent = "Ajoyib reaksiya! Yana o'ynash uchun bosing";
+                        }
+                    };
+                    activeCleanup = () => clearTimeout(tId);
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #16 BMI KALKULYATORI
+                   ----------------------------------------------------------------- */
+                case 16: {
+                    container.innerHTML = `
+                        <div class="space-y-4 max-w-md mx-auto">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs font-mono text-slate-400">Bo'yingiz (sm)</label>
+                                    <input id="bmi-h" type="number" value="175" class="w-full mt-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-mono text-slate-400">Vazningiz (kg)</label>
+                                    <input id="bmi-w" type="number" value="70" class="w-full mt-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono">
+                                </div>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-slate-950 border border-slate-800 text-center">
+                                <div class="text-xs text-slate-400">Sizning BMI indeksingiz</div>
+                                <div id="bmi-val" class="text-4xl font-extrabold text-cyan-400 font-mono my-1">22.9</div>
+                                <div id="bmi-cat" class="text-sm font-semibold text-emerald-400">Normal vazn</div>
+                            </div>
+                        </div>
+                    `;
+                    const calcBmi = () => {
+                        const h = (+container.querySelector('#bmi-h').value) / 100;
+                        const w = +container.querySelector('#bmi-w').value;
+                        if (h > 0 && w > 0) {
+                            const bmi = w / (h * h);
+                            container.querySelector('#bmi-val').textContent = bmi.toFixed(1);
+                            const cat = container.querySelector('#bmi-cat');
+                            if (bmi < 18.5) { cat.textContent = "Vazn yetishmovchiligi"; cat.className = "text-sm font-semibold text-amber-400"; }
+                            else if (bmi < 25) { cat.textContent = "Normal va sog'lom vazn"; cat.className = "text-sm font-semibold text-emerald-400"; }
+                            else if (bmi < 30) { cat.textContent = "Ortiqcha vazn"; cat.className = "text-sm font-semibold text-amber-400"; }
+                            else { cat.textContent = "Semizlik darajasi"; cat.className = "text-sm font-semibold text-rose-400"; }
+                        }
+                    };
+                    container.querySelector('#bmi-h').oninput = calcBmi;
+                    container.querySelector('#bmi-w').oninput = calcBmi;
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #17 MATN TAHLILCHISI
+                   ----------------------------------------------------------------- */
+                case 17: {
+                    container.innerHTML = `
+                        <div class="space-y-4">
+                            <textarea id="ta-in" rows="4" placeholder="Tahlil qilish uchun matn kiriting..." class="w-full p-3.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm">Shamsiddin Portfolio saytiga xush kelibsiz! Bu yerda 30 ta foydali ilova mavjud.</textarea>
+                            <div class="grid grid-cols-3 gap-3 text-center font-mono">
+                                <div class="p-3 rounded-xl bg-slate-950 border border-slate-800"><div class="text-xs text-slate-400">So'zlar</div><div id="ta-w" class="text-xl font-bold text-cyan-400">11</div></div>
+                                <div class="p-3 rounded-xl bg-slate-950 border border-slate-800"><div class="text-xs text-slate-400">Belgilar</div><div id="ta-c" class="text-xl font-bold text-purple-400">79</div></div>
+                                <div class="p-3 rounded-xl bg-slate-950 border border-slate-800"><div class="text-xs text-slate-400">Gaplar</div><div id="ta-s" class="text-xl font-bold text-emerald-400">2</div></div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button id="ta-up" class="px-4 py-2 rounded-xl bg-slate-800 text-xs font-semibold">KATTA HARFLAR</button>
+                                <button id="ta-low" class="px-4 py-2 rounded-xl bg-slate-800 text-xs font-semibold">kichik harflar</button>
+                            </div>
+                        </div>
+                    `;
+                    const inp = container.querySelector('#ta-in');
+                    const analyze = () => {
+                        const v = inp.value;
+                        container.querySelector('#ta-c').textContent = v.length;
+                        container.querySelector('#ta-w').textContent = v.trim() ? v.trim().split(/\s+/).length : 0;
+                        container.querySelector('#ta-s').textContent = v.trim() ? v.split(/[.!?]+/).filter(Boolean).length : 0;
+                    };
+                    inp.oninput = analyze;
+                    container.querySelector('#ta-up').onclick = () => { inp.value = inp.value.toUpperCase(); analyze(); };
+                    container.querySelector('#ta-low').onclick = () => { inp.value = inp.value.toLowerCase(); analyze(); };
+                    analyze();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #18 SEKUNDOMER VA DOIRALAR
+                   ----------------------------------------------------------------- */
+                case 18: {
+                    let ms = 0, swInt = null, laps = [];
+                    container.innerHTML = `
+                        <div class="text-center space-y-4">
+                            <div id="sw-disp" class="text-5xl font-mono font-extrabold text-cyan-400 py-4">00:00.00</div>
+                            <div class="flex justify-center gap-2">
+                                <button id="sw-start" class="px-5 py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-sm">Start</button>
+                                <button id="sw-lap" class="px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-bold text-sm">Doira (Lap)</button>
+                                <button id="sw-stop" class="px-5 py-2.5 rounded-xl bg-rose-500 text-white font-bold text-sm">Stop</button>
+                                <button id="sw-reset" class="px-5 py-2.5 rounded-xl bg-slate-800 text-white font-bold text-sm">Tozalash</button>
+                            </div>
+                            <div id="sw-laps" class="max-h-40 overflow-y-auto space-y-1.5 text-left font-mono text-xs"></div>
+                        </div>
+                    `;
+                    const fmt = (t) => {
+                        const m = String(Math.floor(t / 60000)).padStart(2, '0');
+                        const s = String(Math.floor((t % 60000) / 1000)).padStart(2, '0');
+                        const c = String(Math.floor((t % 1000) / 10)).padStart(2, '0');
+                        return `${m}:${s}.${c}`;
+                    };
+                    container.querySelector('#sw-start').onclick = () => {
+                        if (swInt) return;
+                        const startT = Date.now() - ms;
+                        swInt = setInterval(() => { ms = Date.now() - startT; container.querySelector('#sw-disp').textContent = fmt(ms); }, 30);
+                    };
+                    container.querySelector('#sw-stop').onclick = () => { clearInterval(swInt); swInt = null; };
+                    container.querySelector('#sw-lap').onclick = () => {
+                        if (!ms) return;
+                        laps.unshift(fmt(ms));
+                        container.querySelector('#sw-laps').innerHTML = laps.map((l, i) => `<div class="p-2 rounded-lg bg-slate-950 border border-slate-800 flex justify-between"><span>Doira #${laps.length - i}</span><span class="text-cyan-400">${l}</span></div>`).join('');
+                    };
+                    container.querySelector('#sw-reset').onclick = () => { clearInterval(swInt); swInt = null; ms = 0; laps = []; container.querySelector('#sw-disp').textContent = "00:00.00"; container.querySelector('#sw-laps').innerHTML = ""; };
+                    activeCleanup = () => clearInterval(swInt);
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #19 IPv4 SUBNET KALKULYATOR
+                   ----------------------------------------------------------------- */
+                case 19: {
+                    container.innerHTML = `
+                        <div class="space-y-4 font-mono">
+                            <div class="flex gap-2">
+                                <input id="ip-addr" type="text" value="192.168.1.10" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm">
+                                <select id="ip-cidr" class="px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-emerald-400 text-sm">
+                                    ${[8,16,24,25,26,27,28,29,30].map(c => `<option value="${c}" ${c===24?'selected':''}>/${c}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div id="ip-out" class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs sm:text-sm"></div>
+                        </div>
+                    `;
+                    const calcIp = () => {
+                        const parts = container.querySelector('#ip-addr').value.split('.').map(Number);
+                        const cidr = +container.querySelector('#ip-cidr').value;
+                        const out = container.querySelector('#ip-out');
+                        if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) {
+                            out.innerHTML = `<span class="text-rose-400">Yaroqsiz IPv4 manzil!</span>`; return;
+                        }
+                        const ipInt = ((parts[0]<<24)|(parts[1]<<16)|(parts[2]<<8)|parts[3]) >>> 0;
+                        const mask = (0xffffffff << (32 - cidr)) >>> 0;
+                        const net = (ipInt & mask) >>> 0;
+                        const bcast = (net | (~mask)) >>> 0;
+                        const toIp = (n) => `${(n>>>24)&255}.${(n>>>16)&255}.${(n>>>8)&255}.${n&255}`;
+                        const hosts = Math.max(0, Math.pow(2, 32 - cidr) - 2);
+                        out.innerHTML = `
+                            <div class="flex justify-between"><span class="text-slate-400">Subnet Mask:</span><span class="text-cyan-400">${toIp(mask)}</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">Network ID:</span><span class="text-emerald-400">${toIp(net)}</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">Broadcast ID:</span><span class="text-purple-400">${toIp(bcast)}</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">Foydali Hostlar soni:</span><span class="text-amber-400">${hosts.toLocaleString()} ta</span></div>
+                        `;
+                    };
+                    container.querySelector('#ip-addr').oninput = calcIp;
+                    container.querySelector('#ip-cidr').onchange = calcIp;
+                    calcIp();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #20 XSS & SQL INJECTION ZAIFLIK TEKSHIRUVCHI
+                   ----------------------------------------------------------------- */
+                case 20: {
+                    container.innerHTML = `
+                        <div class="space-y-4">
+                            <textarea id="sec-in" rows="3" class="w-full p-3 rounded-xl bg-slate-950 border border-slate-700 font-mono text-xs text-white">&lt;script&gt;alert('XSS')&lt;/script&gt; OR '1'='1'; DROP TABLE users;--</textarea>
+                            <div id="sec-status" class="p-3.5 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs font-mono"></div>
+                            <div>
+                                <label class="text-xs font-mono text-slate-400">Xavfsiz (Sanitized) HTML chiqish:</label>
+                                <pre id="sec-clean" class="mt-1 p-3 rounded-xl bg-slate-950 border border-slate-800 text-emerald-400 font-mono text-xs overflow-x-auto"></pre>
+                            </div>
+                        </div>
+                    `;
+                    const scan = () => {
+                        const v = container.querySelector('#sec-in').value;
+                        const xss = /<script|onerror=|onload=|javascript:/i.test(v);
+                        const sqli = /(' OR|--|DROP TABLE|UNION SELECT|1=1)/i.test(v);
+                        const st = container.querySelector('#sec-status');
+                        if (xss || sqli) {
+                            st.className = "p-3.5 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs font-mono";
+                            st.innerHTML = `⚠️ XAVF ANIQLANDI: ${xss ? '[XSS Injection] ' : ''}${sqli ? '[SQL Injection]' : ''}`;
+                        } else {
+                            st.className = "p-3.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-mono";
+                            st.innerHTML = `✅ Kiritilgan matn xavfsiz ko'rinmoqda.`;
+                        }
+                        container.querySelector('#sec-clean').textContent = v.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+                    };
+                    container.querySelector('#sec-in').oninput = scan;
+                    scan();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #21 SEZAR SHIFRLASH (CAESAR CIPHER)
+                   ----------------------------------------------------------------- */
+                case 21: {
+                    container.innerHTML = `
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <label class="text-xs font-mono text-slate-400">Siljitish kaliti (Shift):</label>
+                                <input id="cz-shift" type="number" value="3" min="1" max="25" class="w-20 px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-cyan-400 font-mono">
+                            </div>
+                            <textarea id="cz-in" rows="2" class="w-full p-3 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white">Samarqand Kiberxavfsizlik Markazi</textarea>
+                            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-sm text-emerald-400" id="cz-out"></div>
+                        </div>
+                    `;
+                    const runCaesar = () => {
+                        const txt = container.querySelector('#cz-in').value;
+                        const s = ((+container.querySelector('#cz-shift').value) % 26 + 26) % 26;
+                        container.querySelector('#cz-out').textContent = txt.replace(/[a-zA-Z]/g, c => {
+                            const base = c <= 'Z' ? 65 : 97;
+                            return String.fromCharCode(((c.charCodeAt(0) - base + s) % 26) + base);
+                        });
+                    };
+                    container.querySelector('#cz-in').oninput = runCaesar;
+                    container.querySelector('#cz-shift').oninput = runCaesar;
+                    runCaesar();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #22 2048 MINI O'YINI
+                   ----------------------------------------------------------------- */
+                case 22: {
+                    let grid = Array(16).fill(0), score = 0;
+                    const addTile = () => {
+                        const empty = grid.map((v, i) => v === 0 ? i : null).filter(v => v !== null);
+                        if (empty.length) grid[empty[Math.floor(Math.random() * empty.length)]] = Math.random() < 0.9 ? 2 : 4;
+                    };
+                    addTile(); addTile();
+
+                    container.innerHTML = `
+                        <div class="flex flex-col items-center space-y-4">
+                            <div class="flex justify-between w-64 font-mono text-sm">
+                                <span>Ball: <strong id="g2048-sc" class="text-cyan-400">0</strong></span>
+                                <button id="g2048-rst" class="px-3 py-1 rounded-lg bg-slate-800 text-xs">Yangi</button>
+                            </div>
+                            <div id="g2048-board" class="grid grid-cols-4 gap-2 w-64 h-64 p-2 rounded-2xl bg-slate-950 border border-slate-800"></div>
+                            <div class="flex gap-2">
+                                <button data-m="L" class="px-4 py-2 rounded-xl bg-slate-800"><i class="fa-solid fa-arrow-left"></i></button>
+                                <button data-m="U" class="px-4 py-2 rounded-xl bg-slate-800"><i class="fa-solid fa-arrow-up"></i></button>
+                                <button data-m="D" class="px-4 py-2 rounded-xl bg-slate-800"><i class="fa-solid fa-arrow-down"></i></button>
+                                <button data-m="R" class="px-4 py-2 rounded-xl bg-slate-800"><i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    `;
+
+                    const slide = (row) => {
+                        let arr = row.filter(v => v);
+                        for (let i = 0; i < arr.length - 1; i++) {
+                            if (arr[i] === arr[i+1]) { arr[i] *= 2; score += arr[i]; arr[i+1] = 0; }
+                        }
+                        arr = arr.filter(v => v);
+                        while (arr.length < 4) arr.push(0);
+                        return arr;
+                    };
+
+                    const move = (dir) => {
+                        const prev = grid.join(',');
+                        for (let i = 0; i < 4; i++) {
+                            let line = [];
+                            for (let j = 0; j < 4; j++) {
+                                const idx = (dir === 'L' || dir === 'R') ? i * 4 + j : j * 4 + i;
+                                line.push(grid[idx]);
+                            }
+                            if (dir === 'R' || dir === 'D') line.reverse();
+                            line = slide(line);
+                            if (dir === 'R' || dir === 'D') line.reverse();
+                            for (let j = 0; j < 4; j++) {
+                                const idx = (dir === 'L' || dir === 'R') ? i * 4 + j : j * 4 + i;
+                                grid[idx] = line[j];
+                            }
+                        }
+                        if (prev !== grid.join(',')) { addTile(); draw(); }
+                    };
+
+                    const draw = () => {
+                        container.querySelector('#g2048-sc').textContent = score;
+                        container.querySelector('#g2048-board').innerHTML = grid.map(v => `
+                            <div class="rounded-xl flex items-center justify-center font-mono font-bold text-lg ${v ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' : 'bg-slate-900 text-transparent'}">
+                                ${v || 0}
+                            </div>
+                        `).join('');
+                    };
+
+                    const key2048 = (e) => {
+                        if (e.key === 'ArrowLeft') move('L');
+                        if (e.key === 'ArrowRight') move('R');
+                        if (e.key === 'ArrowUp') move('U');
+                        if (e.key === 'ArrowDown') move('D');
+                    };
+                    document.addEventListener('keydown', key2048);
+                    container.querySelectorAll('[data-m]').forEach(b => b.onclick = () => move(b.dataset.m));
+                    container.querySelector('#g2048-rst').onclick = () => { grid = Array(16).fill(0); score = 0; addTile(); addTile(); draw(); };
+                    draw();
+                    activeCleanup = () => document.removeEventListener('keydown', key2048);
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #23 KIBER-BUG TUTISH (WHACK-A-BUG)
+                   ----------------------------------------------------------------- */
+                case 23: {
+                    let score = 0, timeLeft = 25, activeHole = -1;
+                    container.innerHTML = `
+                        <div class="flex flex-col items-center space-y-4">
+                            <div class="flex justify-between w-64 font-mono text-sm">
+                                <span>Tutildi: <strong id="wb-sc" class="text-emerald-400">0</strong></span>
+                                <span>Vaqt: <strong id="wb-tm" class="text-rose-400">25s</strong></span>
+                            </div>
+                            <div id="wb-grid" class="grid grid-cols-3 gap-3 w-64 h-64"></div>
+                        </div>
+                    `;
+                    const grid = container.querySelector('#wb-grid');
+                    const renderHoles = () => {
+                        grid.innerHTML = Array.from({length: 9}, (_, i) => `
+                            <button data-h="${i}" class="rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center text-3xl transition-transform active:scale-90">
+                                ${i === activeHole ? '<i class="fa-solid fa-bug text-rose-500 animate-bounce"></i>' : ''}
+                            </button>
+                        `).join('');
+                        grid.querySelectorAll('button').forEach(b => {
+                            b.onclick = () => {
+                                if (+b.dataset.h === activeHole && timeLeft > 0) {
+                                    score++; activeHole = -1;
+                                    container.querySelector('#wb-sc').textContent = score;
+                                    renderHoles();
+                                }
+                            };
+                        });
+                    };
+                    const bugInt = setInterval(() => {
+                        if (timeLeft <= 0) { clearInterval(bugInt); activeHole = -1; renderHoles(); showToast(`O'yin tugadi! ${score} ta bug tutdingiz!`); return; }
+                        timeLeft--;
+                        container.querySelector('#wb-tm').textContent = timeLeft + 's';
+                        activeHole = Math.floor(Math.random() * 9);
+                        renderHoles();
+                    }, 850);
+                    renderHoles();
+                    activeCleanup = () => clearInterval(bugInt);
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #24 CHIZISH DOSKASI (PAINT CANVAS)
+                   ----------------------------------------------------------------- */
+                case 24: {
+                    container.innerHTML = `
+                        <div class="flex flex-col items-center space-y-3">
+                            <div class="flex flex-wrap items-center justify-between w-full gap-2">
+                                <div class="flex items-center gap-2">
+                                    <input id="pt-col" type="color" value="#22d3ee" class="w-9 h-9 rounded cursor-pointer bg-transparent">
+                                    <input id="pt-sz" type="range" min="2" max="20" value="5" class="w-24 accent-cyan-500">
+                                </div>
+                                <div class="flex gap-2">
+                                    <button id="pt-clr" class="px-3 py-1.5 rounded-xl bg-slate-800 text-xs">Tozalash</button>
+                                    <button id="pt-dl" class="px-3 py-1.5 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">Yuklash (PNG)</button>
+                                </div>
+                            </div>
+                            <canvas id="pt-can" width="520" height="280" class="w-full rounded-xl bg-slate-950 border border-slate-700 cursor-crosshair touch-none"></canvas>
+                        </div>
+                    `;
+                    const can = container.querySelector('#pt-can');
+                    const ctx = can.getContext('2d');
+                    ctx.fillStyle = "#020617";
+                    ctx.fillRect(0, 0, can.width, can.height);
+                    let drawing = false;
+
+                    const getPos = (e) => {
+                        const rect = can.getBoundingClientRect();
+                        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                        return {
+                            x: (clientX - rect.left) * (can.width / rect.width),
+                            y: (clientY - rect.top) * (can.height / rect.height)
+                        };
+                    };
+                    const startDraw = (e) => { drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); };
+                    const moveDraw = (e) => {
+                        if (!drawing) return;
+                        e.preventDefault();
+                        const p = getPos(e);
+                        ctx.strokeStyle = container.querySelector('#pt-col').value;
+                        ctx.lineWidth = container.querySelector('#pt-sz').value;
+                        ctx.lineCap = 'round';
+                        ctx.lineTo(p.x, p.y);
+                        ctx.stroke();
+                    };
+                    const endDraw = () => { drawing = false; };
+
+                    can.addEventListener('mousedown', startDraw);
+                    can.addEventListener('mousemove', moveDraw);
+                    window.addEventListener('mouseup', endDraw);
+                    can.addEventListener('touchstart', startDraw);
+                    can.addEventListener('touchmove', moveDraw);
+                    can.addEventListener('touchend', endDraw);
+
+                    container.querySelector('#pt-clr').onclick = () => { ctx.fillStyle = "#020617"; ctx.fillRect(0, 0, can.width, can.height); };
+                    container.querySelector('#pt-dl').onclick = () => {
+                        const a = document.createElement('a');
+                        a.download = 'shamsiddin-art.png';
+                        a.href = can.toDataURL();
+                        a.click();
+                    };
+                    activeCleanup = () => window.removeEventListener('mouseup', endDraw);
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #25 JONLI MARKDOWN MUHARRIRI
+                   ----------------------------------------------------------------- */
+                case 25: {
+                    container.innerHTML = `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <textarea id="md-in" rows="9" class="p-3 rounded-xl bg-slate-950 border border-slate-700 font-mono text-xs text-slate-200"># Salom Dunyo!\n\nBu **jonli** *Markdown* muharriri.\n\n- Tezkor\n- Qulay\n- Zamonaviy</textarea>
+                            <div id="md-out" class="p-4 rounded-xl bg-slate-950 border border-slate-800 prose prose-invert text-sm overflow-y-auto"></div>
+                        </div>
+                    `;
+                    const parseMd = () => {
+                        let txt = container.querySelector('#md-in').value
+                            .replace(/^# (.*$)/gim, '<h1 class="text-xl font-bold text-cyan-400 mb-2">$1</h1>')
+                            .replace(/^## (.*$)/gim, '<h2 class="text-lg font-bold text-purple-400 mb-1">$1</h2>')
+                            .replace(/\*\*(.*?)\*\*/gim, '<strong class="text-white">$1</strong>')
+                            .replace(/\*(.*?)\*/gim, '<em class="text-slate-300">$1</em>')
+                            .replace(/^- (.*$)/gim, '<li class="ml-4 list-disc text-slate-300">$1</li>')
+                            .replace(/\n/gim, '<br>');
+                        container.querySelector('#md-out').innerHTML = txt;
+                    };
+                    container.querySelector('#md-in').oninput = parseMd;
+                    parseMd();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #26 JSON FORMATLOVCHI & VALIDATOR
+                   ----------------------------------------------------------------- */
+                case 26: {
+                    container.innerHTML = `
+                        <div class="space-y-3">
+                            <textarea id="js-in" rows="6" class="w-full p-3 rounded-xl bg-slate-950 border border-slate-700 font-mono text-xs text-cyan-300">{"developer":"Shamsiddin","city":"Samarkand","apps":30,"active":true}</textarea>
+                            <div class="flex gap-2">
+                                <button id="js-fmt" class="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">Chiroyli Formatlash</button>
+                                <button id="js-min" class="px-4 py-2 rounded-xl bg-slate-800 text-white font-bold text-xs">Siqish (Minify)</button>
+                            </div>
+                            <div id="js-msg" class="text-xs font-mono text-emerald-400"></div>
+                        </div>
+                    `;
+                    const inp = container.querySelector('#js-in');
+                    const msg = container.querySelector('#js-msg');
+                    container.querySelector('#js-fmt').onclick = () => {
+                        try { inp.value = JSON.stringify(JSON.parse(inp.value), null, 4); msg.textContent = "✅ Yaroqli JSON formatlandi!"; msg.className = "text-xs font-mono text-emerald-400"; }
+                        catch (e) { msg.textContent = "❌ JSON sintaksis xatosi: " + e.message; msg.className = "text-xs font-mono text-rose-400"; }
+                    };
+                    container.querySelector('#js-min').onclick = () => {
+                        try { inp.value = JSON.stringify(JSON.parse(inp.value)); msg.textContent = "✅ JSON siqildi!"; }
+                        catch (e) { msg.textContent = "❌ Xato: " + e.message; }
+                    };
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #27 BIRLIKLAR KONVERTORI
+                   ----------------------------------------------------------------- */
+                case 27: {
+                    container.innerHTML = `
+                        <div class="space-y-4">
+                            <select id="un-type" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-cyan-400 font-semibold text-sm">
+                                <option value="len">Uzunlik (Kilometr ↔ Mil)</option>
+                                <option value="wgt">Og'irlik (Kilogramm ↔ Funt)</option>
+                                <option value="tmp">Harorat (Selsiy °C ↔ Farengeyt °F)</option>
+                            </select>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div><label id="un-l1" class="text-xs text-slate-400">Kilometr (km)</label><input id="un-v1" type="number" value="10" class="w-full mt-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono"></div>
+                                <div><label id="un-l2" class="text-xs text-slate-400">Mil (mi)</label><input id="un-v2" type="number" readonly class="w-full mt-1 px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-emerald-400 font-mono"></div>
+                            </div>
+                        </div>
+                    `;
+                    const calcUnit = () => {
+                        const t = container.querySelector('#un-type').value;
+                        const v = parseFloat(container.querySelector('#un-v1').value) || 0;
+                        const l1 = container.querySelector('#un-l1'), l2 = container.querySelector('#un-l2'), out = container.querySelector('#un-v2');
+                        if (t === 'len') { l1.textContent = "Kilometr (km)"; l2.textContent = "Mil (mi)"; out.value = (v * 0.621371).toFixed(3); }
+                        if (t === 'wgt') { l1.textContent = "Kilogramm (kg)"; l2.textContent = "Funt (lbs)"; out.value = (v * 2.20462).toFixed(3); }
+                        if (t === 'tmp') { l1.textContent = "Selsiy (°C)"; l2.textContent = "Farengeyt (°F)"; out.value = ((v * 9/5) + 32).toFixed(2); }
+                    };
+                    container.querySelector('#un-type').onchange = calcUnit;
+                    container.querySelector('#un-v1').oninput = calcUnit;
+                    calcUnit();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #28 MORZE ALIFBOSI TARJIMONI
+                   ----------------------------------------------------------------- */
+                case 28: {
+                    const morseMap = { A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.','0':'-----',' ':'/' };
+                    container.innerHTML = `
+                        <div class="space-y-4">
+                            <input id="mr-in" type="text" value="SOS SAMARKAND" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white uppercase">
+                            <div id="mr-out" class="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-lg text-cyan-400 tracking-widest"></div>
+                            <button id="mr-play" class="px-5 py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs"><i class="fa-solid fa-volume-high mr-1.5"></i>Signalni eshitish</button>
+                        </div>
+                    `;
+                    const toMorse = () => {
+                        const txt = container.querySelector('#mr-in').value.toUpperCase();
+                        container.querySelector('#mr-out').textContent = txt.split('').map(c => morseMap[c] || '').join(' ');
+                    };
+                    container.querySelector('#mr-in').oninput = toMorse;
+                    container.querySelector('#mr-play').onclick = () => {
+                        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                        const code = container.querySelector('#mr-out').textContent;
+                        let t = ctx.currentTime;
+                        for (let ch of code) {
+                            if (ch === '.' || ch === '-') {
+                                const osc = ctx.createOscillator();
+                                osc.frequency.value = 650;
+                                osc.connect(ctx.destination);
+                                const dur = ch === '.' ? 0.08 : 0.22;
+                                osc.start(t); osc.stop(t + dur);
+                                t += dur + 0.07;
+                            } else { t += 0.14; }
+                        }
+                    };
+                    toMorse();
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #29 TASODIFIY QAROR & O'YIN KUBIGI
+                   ----------------------------------------------------------------- */
+                case 29: {
+                    container.innerHTML = `
+                        <div class="space-y-5 text-center">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800">
+                                    <div id="rd-dice" class="text-4xl font-extrabold text-purple-400 mb-2">🎲 6</div>
+                                    <button id="rd-roll" class="px-4 py-2 rounded-xl bg-purple-600 text-white text-xs font-bold">Kubik otish</button>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800">
+                                    <div id="rd-coin" class="text-2xl font-extrabold text-amber-400 my-2">🪙 GERB</div>
+                                    <button id="rd-flip" class="px-4 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-bold">Tanga tashlash</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2 text-left">
+                                <label class="text-xs font-mono text-slate-400">Variantlar (vergul bilan ajrating):</label>
+                                <input id="rd-opts" type="text" value="Python o'rganish, Web sayt qilish, Kiberxavfsizlik, Dam olish" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm">
+                                <button id="rd-pick" class="w-full py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-bold text-sm">Tasodifiy Tanlash</button>
+                                <div id="rd-ans" class="text-center font-bold text-emerald-400 pt-1"></div>
+                            </div>
+                        </div>
+                    `;
+                    container.querySelector('#rd-roll').onclick = () => container.querySelector('#rd-dice').textContent = '🎲 ' + (Math.floor(Math.random()*6)+1);
+                    container.querySelector('#rd-flip').onclick = () => container.querySelector('#rd-coin').textContent = Math.random() < 0.5 ? '🪙 GERB' : '🪙 RAQAM';
+                    container.querySelector('#rd-pick').onclick = () => {
+                        const arr = container.querySelector('#rd-opts').value.split(',').map(s => s.trim()).filter(Boolean);
+                        if (arr.length) container.querySelector('#rd-ans').textContent = "Tanlangan qaror: " + arr[Math.floor(Math.random() * arr.length)];
+                    };
+                    break;
+                }
+
+                /* -----------------------------------------------------------------
+                   #30 SHAXSIY BYUDJET & XARAJATLAR HISOBLAGICHI
+                   ----------------------------------------------------------------- */
+                case 30: {
+                    let items = [{ name: "Freelance loyiha", amt: 2500000 }, { name: "Server va domen", amt: -350000 }];
+                    container.innerHTML = `
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-center">
+                                <div class="text-xs text-slate-400">Umumiy Sof Balans</div>
+                                <div id="bg-bal" class="text-3xl font-extrabold text-emerald-400 font-mono">2,150,000 UZS</div>
+                            </div>
+                            <form id="bg-form" class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                <input id="bg-name" type="text" required placeholder="Nomi (masalan: Internet)" class="px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white">
+                                <input id="bg-amt" type="number" required placeholder="+daromad yoki -xarajat" class="px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white font-mono">
+                                <button type="submit" class="py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">Qo'shish</button>
+                            </form>
+                            <div id="bg-list" class="space-y-1.5 max-h-44 overflow-y-auto text-xs font-mono"></div>
+                        </div>
+                    `;
+                    const renderBg = () => {
+                        const total = items.reduce((s, x) => s + x.amt, 0);
+                        const bal = container.querySelector('#bg-bal');
+                        bal.textContent = `${total.toLocaleString()} UZS`;
+                        bal.className = `text-3xl font-extrabold font-mono ${total >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+                        container.querySelector('#bg-list').innerHTML = items.map((it, i) => `
+                            <div class="flex justify-between items-center p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+                                <span>${it.name}</span>
+                                <span class="${it.amt >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${it.amt >= 0 ? '+' : ''}${it.amt.toLocaleString()} UZS</span>
+                            </div>
+                        `).join('');
+                    };
+                    container.querySelector('#bg-form').onsubmit = (e) => {
+                        e.preventDefault();
+                        const name = container.querySelector('#bg-name').value.trim();
+                        const amt = parseFloat(container.querySelector('#bg-amt').value);
+                        if (name && !isNaN(amt)) { items.unshift({ name, amt }); e.target.reset(); renderBg(); }
+                    };
+                    renderBg();
+                    break;
+                }
+            }
+        }
+
+        // Sahifa yuklanganda ishga tushirish
+        window.addEventListener('DOMContentLoaded', () => {
+            typeWriterLoop();
+            renderProjects();
+        });
+    </script>
+</body>
+</html>
